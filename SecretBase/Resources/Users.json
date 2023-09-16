@@ -1,0 +1,168 @@
+{
+    "1001": {
+        "id": "1001",
+        "name": "飛田",
+        "icon": "",
+        "profile": "1990年代後半〜2010年代の作品多め。ネオロマンサー。最近はFGOとウマ娘を細々やる程度の隠居オタク。",
+        "shelf": [
+            {
+                "itemId": "001",
+                "review": "古参乙女ゲーマーとしては悪役令嬢なんてものほぼおらんわ！という気持ちから悪役令嬢モノは避けてきたが、これは本当に面白い。エミを思うレミリアの強かさに惚れる。絵も巧みで、少女漫画のような花のような笑顔を見せたかと思えば、H×Hを彷彿とさせる恐ろしげな表情が描かれる。美しく賢く強かな少女がお好きな方におすすめしたい。",
+                "isRegistered": true,
+                "likes": [
+                    {
+                        "userId": "1002",
+                    }
+                ]
+            },
+            {
+                "itemId": "002",
+                "review": "小学生の時にハマって、めちゃくちゃ周回した。母親に「牧場主になりたい！」と曰うほどののめり込みようだった。とにかく世界観や動物のデザインが可愛くて大好きだった。あの可愛さは2Dならではだと思う。ちなみに自分の嫁はエレンちゃんです。",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "021",
+                "review": "幼少期編がそれぞれのキャラクタにあり、それによって本編の内容が変わるのが面白い。初のEVSシステム搭載で、名前を呼ばれるのにどきどきした。ほむらちゃんに名前を呼んでほしくてひびきのウォッチャーを買いに走ったのも懐かしい思い出。夏祭りのミニゲームがすごく好きで、金魚掬いをめっちゃやり込んでた。今でもやりたい。",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "004",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "005",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "006",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "015",
+                "review": "幼い頃に初めてあの独特の世界観に触れ、衝撃を受けた。",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "012",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "013",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "016",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "003",
+                "review": "この映画の影響でどうしても闇に浮かぶ蘭領王を見たくておん祭りに行きました。",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "008",
+                "review": "",
+                "isRegistered": false,
+                "likes": []
+            }
+        ]
+    },
+    "1002": {
+        "id": "1002",
+        "name": "モモ",
+        "profile": "文字書きです。おじさんが好き。",
+        "shelf": [
+            {
+                "itemId": "013",
+                "review": "姉の影響で7歳くらいの時にプレイしました。彰紋くんが好きでした。",
+                "isRegistered": true,
+                "likes": [
+                    {
+                        "userId": "1001",
+                    }
+                ]
+            },
+            {
+                "itemId": "007",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "008",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "014",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "017",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            }
+        ]
+    },
+    "1003": {
+        "id": "1003",
+        "name": "めかぶ",
+        "profile": "",
+        "shelf": [
+            {
+                "itemId": "021",
+                "review": "華澄さんのせいでお姉さんにときめくようになった。ギャップがいい。",
+                "isRegistered": true,
+                "likes": [
+                    {
+                        "userId": "1001",
+                    }
+                ]
+            },
+            {
+                "itemId": "018",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "011",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "010",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            },
+            {
+                "itemId": "004",
+                "review": "",
+                "isRegistered": true,
+                "likes": []
+            }
+        ]
+    }
+}
