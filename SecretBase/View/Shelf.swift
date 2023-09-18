@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Shelf: View {
+    var user: User
+    
     var body: some View {
         VStack{
             HStack{
@@ -19,55 +21,19 @@ struct Shelf: View {
                 }
 
                 Spacer()
-                Text("UserName")
-                UserIconSmall()
-                    .frame(width: 72)
+                Text(user.name)
+                UserIconSmall(user: user)
+                    .frame(width: 48)
             }
             .padding(.horizontal)
-            ScrollView {
-                ZStack{
-                    Rectangle()
-                        .foregroundColor(.blue)
-                    VStack{
-                        HStack{
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                        }
-                        .padding()
-                        HStack{
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                        }
-                        .padding()
-                        HStack{
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                            Rectangle()
-                                .frame(width: 120, height: 180)
-                        }
-                        .padding()
-                    }
-                    .foregroundColor(.white)
-                    
-                }
-            }
-          
+            
+            TitleView(user: user)
         }
     }
 }
 
 struct Shelf_Previews: PreviewProvider {
     static var previews: some View {
-        Shelf()
+        Shelf(user: users["1001"]!)
     }
 }

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct UserIconSmall: View {
-    
+    var user:User
     var body: some View {
-        Image("default_usericon")
+        Image("\(user.icon)")
             .resizable()
             .scaledToFit()
             .clipShape(Circle())
@@ -21,6 +21,6 @@ struct UserIconSmall: View {
 
 struct UserIconSmall_Previews: PreviewProvider {
     static var previews: some View {
-        UserIconSmall()
+        UserIconSmall(user: users["1001"]!)
     }
 }

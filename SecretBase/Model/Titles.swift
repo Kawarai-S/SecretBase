@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Title: Codable {
+public struct Title: Codable {
     let id: String
     let title: String
     let category: Category

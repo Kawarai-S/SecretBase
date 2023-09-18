@@ -100,13 +100,13 @@
 			children = (
 				A54A42BF2AA7233700B3EDE0 /* ContentView.swift */,
 				A54A42CC2AA7267400B3EDE0 /* Shelf.swift */,
-				A5C520592AB601990066A002 /* CategoryItem.swift */,
 				A54A42CE2AA727F900B3EDE0 /* Serch.swift */,
 				A5C5204A2AB456B30066A002 /* TitleDetail.swift */,
 				A5C520602AB7D4210066A002 /* TitleView.swift */,
 				A5C520572AB5F05A0066A002 /* TitleReview.swift */,
 				A5C520552AB5EA3A0066A002 /* TitleImage.swift */,
 				A5C520432AB425820066A002 /* UserIconSmall.swift */,
+				A5C520592AB601990066A002 /* CategoryItem.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

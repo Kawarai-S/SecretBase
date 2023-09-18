@@ -8,16 +8,40 @@
 import SwiftUI
 
 struct TitleDetail: View {
+    let title: Title
+    
     var body: some View {
         HStack {
-            TitleImage()
+            TitleImage(image:title.image)
             VStack(alignment: .leading) {
-                Text("悪役令嬢の中の人〜断罪された転生者のため嘘つきヒロインに復讐いたします〜(1)")
+                Text(title.title)
                     .font(.title3)
-                Divider()
-                Text("白梅 ナズナ/まきぶろ")
-                Text("一迅社")
-                Text("2022年04月25日")
+                
+                switch title.category {
+                case .manga:
+                    if case .manga(let mangaDetails) = title.details {
+                        Group {
+                            Text("作者: \(mangaDetails.author)")
+                            Text("出版社: \(mangaDetails.publisherName)")
+                            Text("発売日: \(mangaDetails.salesDate)")
+                        }
+                    }
+                case .game:
+                    if case .game(let gameDetails) = title.details {
+                        Group {
+                            Text("メーカー: \(gameDetails.label)")
+                            Text("ハードウェア: \(gameDetails.hardware)")
+                            Text("発売日: \(gameDetails.salesDate)")
+                        }
+                    }
+                case .anime:
+                    if case .anime(let animeDetails) = title.details {
+                        Group {
+                            Text("製作会社: \(animeDetails.label)")
+                            Text("放送日: \(animeDetails.broadcastDate)")
+                        }
+                    }
+                }
             }
             .padding(.leading)
             
@@ -29,6 +53,9 @@ struct TitleDetail: View {
 
 struct TitleDetail_Previews: PreviewProvider {
     static var previews: some View {
-        TitleDetail()
-    }
+        if let sampleTitle = titles["001"] {
+            TitleDetail(title: sampleTitle)
+        } else {
+            Text("Sample title not found.")
+        }    }
 }

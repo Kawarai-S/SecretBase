@@ -2,183 +2,226 @@
     "001":{
         "id":"001",
         "title":"悪役令嬢の中の人〜断罪された転生者のため嘘つきヒロインに復讐いたします〜(1)",
-        "author":"白梅 ナズナ/まきぶろ",
-        "publisherName":"一迅社",
-        "salesDate":"2022年04月25日",
         "category":"マンガ",
-        "image":"001"
+        "image":"001",
+        "details":{
+            "author":"白梅 ナズナ/まきぶろ",
+            "publisherName":"一迅社",
+            "salesDate":"2022年04月25日"
+        }
     },
     "002":{
         "id":"002",
         "title":"牧場物語",
-        "label":"パック・イン・ビデオ",
-        "hardware":"SFC",
-        "salesDate":"1996年8月9日",
         "category":"ゲーム",
-        "image":"002"
+        "image":"002",
+        "details":{
+            "label":"パック・イン・ビデオ",
+            "hardware":"SFC",
+            "salesDate":"1996年8月9日"
+        }
     },
     "003":{
         "id":"003",
         "title":"劇場版 遙かなる時空の中で 舞一夜",
-        "label":"コーエーテクモゲームス",
-        "salesDate":"2007年2月23日",
         "category":"アニメ",
-        "image":"003"
+        "image":"003",
+        "details":{
+            "label":"コーエーテクモゲームス",
+            "broadcastDate":"2007年2月23日"
+        }
     },
     "004":{
         "id":"004",
         "title":"ホイッスル！（1）",
-        "author":"樋口大輔",
-        "publisherName":"集英社",
-        "salesDate":"2006年04月18日",
         "category":"マンガ",
-        "image":"004"
+        "image":"004",
+        "details":{
+            "author":"樋口大輔",
+            "publisherName":"集英社",
+            "salesDate":"2006年04月18日"
+        }
     },
     "005":{
         "id":"005",
         "title":"チョウになる日",
-        "author":"夢花 李",
-        "publisherName":"大洋図書",
-        "salesDate":"2003年7月1日",
         "category":"マンガ",
-        "image":"005"
+        "image":"005",
+        "details":{
+            "author":"夢花 李",
+            "publisherName":"大洋図書",
+            "salesDate":"2003年7月1日"
+        }
     },
     "006":{
         "id":"006",
         "title":"ハチミツとクローバー 1",
-        "author":"羽海野 チカ",
-        "publisherName":"集英社",
-        "salesDate":"2002年08月19日",
         "category":"マンガ",
-        "image":"006"
+        "image":"006",
+        "details":{
+            "author":"羽海野 チカ",
+            "publisherName":"集英社",
+            "salesDate":"2002年08月19日"
+        }
     },
     "007":{
         "id":"007",
         "title":"ゴールデン・デイズ",
-        "author":"高尾滋",
-        "publisherName":"白泉社",
-        "salesDate":"2005年11月18日",
         "category":"マンガ",
-        "image":"007"
+        "image":"007",
+        "details":{
+            "author":"高尾滋",
+            "publisherName":"白泉社",
+            "salesDate":"2005年11月18日"
+        }
     },
     "008":{
         "id":"008",
         "title":"ペルソナ5",
-        "label":"アトラス",
-        "hardware":"PS4",
-        "salesDate":"2016年09月15日",
         "category":"ゲーム",
-        "image":"008"
+        "image":"008",
+        "details":{
+            "label":"アトラス",
+            "hardware":"PS4",
+            "salesDate":"2016年09月15日"
+        }
     },
     "009":{
         "id":"009",
         "title":"ペルソナ4",
-        "label":"アトラス",
-        "hardware":"PS2",
-        "salesDate":"2008年7月10日",
         "category":"ゲーム",
-        "image":"009"
+        "image":"009",
+        "details":{
+            "label":"アトラス",
+            "hardware":"PS2",
+            "salesDate":"2008年7月10日"
+        }
     },
     "010":{
         "id":"010",
         "title":"幻想水滸伝",
-        "label":"コナミ",
-        "hardware":"PS",
-        "salesDate":"1995年12月15日",
         "category":"ゲーム",
-        "image":"010"
+        "image":"010",
+        "details":{
+            "label":"コナミ",
+            "hardware":"PS",
+            "salesDate":"1995年12月15日"
+        }
     },
     "011":{
         "id":"011",
         "title":"幻想水滸伝Ⅱ",
-        "label":"コナミ",
-        "hardware":"PS",
-        "salesDate":"1998年12月17日",
         "category":"ゲーム",
-        "image":"011"
+        "image":"011",
+        "details":{
+            "label":"コナミ",
+            "hardware":"PS",
+            "salesDate":"1998年12月17日"
+        }
     },
     "012":{
         "id":"012",
         "title":"遙かなる時空の中で3",
-        "label":"コーエー",
-        "hardware":"PS2",
-        "salesDate":"2004年12月22日",
         "category":"ゲーム",
-        "image":"012"
+        "image":"012",
+        "details":{
+            "label":"コーエー",
+            "hardware":"PS2",
+            "salesDate":"2004年12月22日"
+        }
     },
     "013":{
         "id":"013",
         "title":"遙かなる時空の中で2",
-        "label":"コーエー",
-        "hardware":"PC",
-        "salesDate":"2001年9月28日",
         "category":"ゲーム",
-        "image":"013"
+        "image":"013",
+        "details":{
+            "label":"コーエー",
+            "hardware":"PC",
+            "salesDate":"2001年9月28日"
+        }
     },
     "014":{
         "id":"014",
         "title":"デジモンアドベンチャー02",
-        "label":"東映アニメーション",
-        "broadcastDate":"2000年4月2日",
         "category":"アニメ",
-        "image":"014"
+        "image":"014",
+        "details":{
+            "label":"東映アニメーション",
+            "broadcastDate":"2000年4月2日"
+        }
     },
     "015":{
         "id":"015",
         "title":"少女革命ウテナ",
-        "label":"J.C.STAFF",
-        "broadcastDate":"1997年4月2日",
         "category":"アニメ",
-        "image":"015"
+        "image":"015",
+        "details":{
+            "label":"J.C.STAFF",
+            "broadcastDate":"1997年4月2日"
+        }
     },
     "016":{
         "id":"016",
         "title":"デジモンアドベンチャー",
-        "label":"東映アニメーション",
-        "broadcastDate":"1999年3月7日",
         "category":"アニメ",
-        "image":"016"
+        "image":"016",
+        "details":{
+            "label":"東映アニメーション",
+            "broadcastDate":"1999年3月7日"
+        }
     },
     "017":{
         "id":"017",
         "title":"NARUTO -ナルト- 疾風伝",
-        "label":"ぴえろ",
-        "broadcastDate":"2007年2月15日",
         "category":"アニメ",
-        "image":"017"
+        "image":"017",
+        "details":{
+            "label":"studioぴえろ",
+            "broadcastDate":"2007年2月15日"
+        }
     },
     "018":{
         "id":"018",
-        "title":"BLEACH",
-        "label":"ぴえろ",
-        "broadcastDate":"2004年10月5日",
+        "title":"魔法少女まどか☆マギカ",
         "category":"アニメ",
-        "image":"018"
+        "image":"018",
+        "details":{
+            "label":"シャフト",
+            "broadcastDate":"2011年1月7日"
+        }
     },
     "019":{
         "id":"019",
-        "title":"ハイキュー!! TO THE TOP",
-        "label":"Production I.G",
-        "broadcastDate":"2020年1月11日",
-        "category":"アニメ",
-        "image":"019"
+        "title":"遙かなる時空の中で 舞一夜",
+        "category":"ゲーム",
+        "image":"019",
+        "details":{
+            "label":"コーエー",
+            "hardware":"PS2",
+            "salesDate":"2007年9月20日"
+        }
     },
     "020":{
         "id":"020",
-        "title":"金色のコルダ",
-        "label":"コーエー",
-        "hardware":"PC",
-        "salesDate":"2003年9月19日",
+        "title":"幻想水滸伝ティアクライス",
         "category":"ゲーム",
-        "image":"020"
+        "image":"020",
+        "details":{
+            "label":"コナミ",
+            "hardware":"DS",
+            "salesDate":"2008年9月18日"
+        }
     },
     "021":{
         "id":"021",
         "title":"ときめきメモリアル２",
-        "label":"コナミ",
-        "hardware":"PS",
-        "salesDate":"1999年11月25日",
         "category":"ゲーム",
-        "image":"021"
+        "image":"021",
+        "details":{
+            "label":"コナミ",
+            "hardware":"PS",
+            "salesDate":"1999年11月25日"
+        }
     }
 }

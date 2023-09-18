@@ -5,6 +5,8 @@
 //  Created by 瓦井つばさ on 2023/09/17.
 //
 
+//今はとりあえず使わない。
+
 import SwiftUI
 
 struct CategoryItem: View {

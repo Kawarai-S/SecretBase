@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Shelf()
+            Shelf(user: users["1001"]!)
                 .tabItem {
                     Label("My Shelf", systemImage: "books.vertical")
                 }
