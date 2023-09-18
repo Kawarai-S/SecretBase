@@ -7,6 +7,10 @@
 
 import Foundation
 
+var titles:[String: Title] = load("TitleList.json")
+var users: [String: User] = load("Users.json")
+
+
 func load<T: Decodable>(_ filename: String) -> T {
     // ファイルから読み込んだデータを保持するための変数
     let data: Data
