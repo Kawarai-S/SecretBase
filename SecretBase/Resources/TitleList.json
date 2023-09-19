@@ -183,34 +183,33 @@
     },
     "018":{
         "id":"018",
-        "title":"魔法少女まどか☆マギカ",
+        "title":"BLEACH",
         "category":"アニメ",
         "image":"018",
         "details":{
-            "label":"シャフト",
-            "broadcastDate":"2011年1月7日"
+            "label":"ぴえろ",
+            "broadcastDate":"2004年10月5日",
         }
     },
     "019":{
         "id":"019",
-        "title":"遙かなる時空の中で 舞一夜",
-        "category":"ゲーム",
+        "title":"ハイキュー!! TO THE TOP",
+        "category":"アニメ",
         "image":"019",
         "details":{
-            "label":"コーエー",
-            "hardware":"PS2",
-            "salesDate":"2007年9月20日"
+            "label":"Production I.G",
+            "broadcastDate":"2020年1月11日",
         }
     },
     "020":{
         "id":"020",
-        "title":"幻想水滸伝ティアクライス",
+        "title":"金色のコルダ",
         "category":"ゲーム",
         "image":"020",
         "details":{
-            "label":"コナミ",
-            "hardware":"DS",
-            "salesDate":"2008年9月18日"
+            "label":"コーエー",
+            "hardware":"PC",
+            "salesDate":"2003年9月19日",
         }
     },
     "021":{

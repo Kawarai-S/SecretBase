@@ -15,7 +15,7 @@ public struct Title: Codable {
     let image: String
     let details: CategoryDetails
     
-    enum Category: String, Codable {
+    enum Category: String, Codable, CaseIterable {
         case manga = "マンガ"
         case game = "ゲーム"
         case anime = "アニメ"
