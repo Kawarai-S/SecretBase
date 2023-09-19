@@ -12,10 +12,14 @@ struct Serch: View {
     @State private var selectedCategory: Title.Category?
     
     var filteredTitles:[Title]{
+        guard !keyword.isEmpty else { return [] }
+        // 一旦全部小文字にして比較する
+        let lowercasedKeyword = keyword.lowercased()
         return titles.values.filter { title in
-            (keyword.isEmpty || title.title.contains(keyword)) && (selectedCategory == nil || title.category == selectedCategory)
+            title.title.lowercased().contains(lowercasedKeyword) && (selectedCategory == nil || title.category == selectedCategory)
         }
     }
+
     var body: some View {
         NavigationView{
             VStack{
