@@ -10,7 +10,7 @@ import SwiftUI
 struct TitleView: View {
     var user: User
     var body: some View {
-        NavigationView {
+//        NavigationView {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 100),alignment: .bottom)])
                 {
@@ -27,7 +27,7 @@ struct TitleView: View {
                 }
             }
             .padding(.horizontal)
-        }
+//        }
     }
 }
 

@@ -11,24 +11,36 @@ struct Shelf: View {
     var user: User
     
     var body: some View {
-        VStack{
-            HStack{
-                Button {
+        let loggedInUser: User = users["1001"]! 
+//        NavigationView {
+            VStack{
+                HStack{
+                    if user.id == loggedInUser.id {
+                        Button {
+                            // 作品を追加するアクション
+                        } label: {
+                            Image(systemName: "plus.square")
+                            Text("作品を追加する")
+                        }
+                    } else {
+                        Button {
+                            // お気に入りに登録するアクション
+                        } label: {
+                            Image(systemName: "bookmark.fill")
+                            Text("お気に入りに登録する")
+                        }
+                    }
                     
-                } label: {
-                    Image(systemName: "plus.square")
-                    Text("作品を追加する")
+                    Spacer()
+                    Text(user.name)
+                    UserIconSmall(user: user)
+                        .frame(width: 48,height: 48)
                 }
-
-                Spacer()
-                Text(user.name)
-                UserIconSmall(user: user)
-                    .frame(width: 48)
+                .padding(.horizontal)
+                
+                TitleView(user: user)
             }
-            .padding(.horizontal)
-            
-            TitleView(user: user)
-        }
+//        }
     }
 }
 

@@ -21,7 +21,7 @@ struct Serch: View {
     }
 
     var body: some View {
-        NavigationView{
+//        NavigationView{
             VStack{
                 TextField("キーワードを入力",text: $keyword)
                     .padding(10)
@@ -50,7 +50,7 @@ struct Serch: View {
                 }
                 .listStyle(.inset)
             }
-        }
+//        }
     }
 }
 

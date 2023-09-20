@@ -12,7 +12,7 @@ struct UserIconSmall: View {
     var body: some View {
         Image("\(user.icon)")
             .resizable()
-            .scaledToFit()
+            .scaledToFill()
             .clipShape(Circle())
             
             

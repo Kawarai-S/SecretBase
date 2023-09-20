@@ -10,26 +10,42 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Shelf(user: users["1001"]!)
-                .tabItem {
-                    Label("My Shelf", systemImage: "books.vertical")
-                }
-            Serch()
-                .tabItem {
-                    Label("Serch", systemImage: "magnifyingglass")
-                }
+            NavigationView {
+                Shelf(user: users["1001"]!)
+                    .navigationBarHidden(true)
+            }
+            .background(Color.white.ignoresSafeArea()) // 背景色の設定
+            .tabItem {
+                Label("My Shelf", systemImage: "books.vertical")
+            }
             
-            Text("通知とか")
-                .tabItem {
-                    Label("Notification", systemImage: "bell.fill")
-                }
-            Text("自分のお気に入りレビューとか")
-                .tabItem {
-                    Label("Bookmark", systemImage: "bookmark.fill")
-                }
-                
+            NavigationView {
+                Serch()
+                    .navigationBarHidden(true)
+            }
+            .background(Color.white.ignoresSafeArea()) // 背景色の設定
+            .tabItem {
+                Label("Serch", systemImage: "magnifyingglass")
+            }
+            
+            NavigationView {
+                Text("通知とか")
+                    .navigationBarHidden(true)
+            }
+            .background(Color.white.ignoresSafeArea()) // 背景色の設定
+            .tabItem {
+                Label("Notification", systemImage: "bell.fill")
+            }
+            
+            NavigationView {
+                Text("自分のお気に入りレビューとか")
+                    .navigationBarHidden(true)
+            }
+            .background(Color.white.ignoresSafeArea()) // 背景色の設定
+            .tabItem {
+                Label("Bookmark", systemImage: "bookmark.fill")
+            }
         }
-        
     }
 }
 
@@ -38,3 +54,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
