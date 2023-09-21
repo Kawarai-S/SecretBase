@@ -34,7 +34,7 @@ struct Shelf: View {
                     Spacer()
                     Text(user.name)
                     UserIconSmall(user: user)
-                        .frame(width: 48,height: 48)
+                        .frame(width: 40,height: 40)
                 }
                 .padding(.horizontal)
                 

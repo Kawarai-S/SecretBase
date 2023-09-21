@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
+    
     var body: some View {
         TabView {
             NavigationView {
