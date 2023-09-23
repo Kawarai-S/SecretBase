@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SignInVIew: View {
-    @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
     @State var isShowSheet = false
     @State var isFullScreen = false
     var body: some View {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
+    
     var body: some View {
         if authStateManager.signInState {
             TabView {
