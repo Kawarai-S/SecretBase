@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct User: Codable {
+public struct AppUser: Codable {
     let id: String
     let name: String
     let icon: String
@@ -18,10 +18,22 @@ public struct User: Codable {
 public struct ShelfItem: Codable {
     let itemId: String
     let review: String
-    let isRegistered: Bool
+//    let isRegistered: Bool
     let likes: [Like]
 }
 
 public struct Like: Codable {
     let userId: String
+}
+
+extension AppUser {
+    static var dummy: AppUser {
+        return AppUser(
+            id: "dummyID",
+            name: "ダミーユーザー",
+            icon: "dummyIconPath",
+            profile: "",
+            shelf: []
+        )
+    }
 }

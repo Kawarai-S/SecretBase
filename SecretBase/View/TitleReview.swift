@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TitleReview: View {
-    var user: User
+    var user: AppUser
     var item: ShelfItem
     // itemIdを使ってtitles辞書からTitleオブジェクトを取得
     var titleForItem: Title? {
@@ -56,7 +56,7 @@ struct TitleReview: View {
 }
 
 extension ShelfItem {
-    func likedUsers(from allUsers: [String: User]) -> [User] {
+    func likedUsers(from allUsers: [String: AppUser]) -> [AppUser] {
         return likes.compactMap { like in
             return allUsers[like.userId]
         }

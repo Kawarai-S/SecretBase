@@ -34,3 +34,4 @@ struct FirebaseUIView_Previews: PreviewProvider {
         FirebaseUIView()
     }
 }
+

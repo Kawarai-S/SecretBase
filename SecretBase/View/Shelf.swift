@@ -8,44 +8,75 @@
 import SwiftUI
 
 struct Shelf: View {
-    var user: User
+    @ObservedObject private var userProfileModel = UserProfileModel()
+    @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
+    @State private var showProfileModal: Bool = false
     
     var body: some View {
-        let loggedInUser: User = users["1001"]! 
-//        NavigationView {
-            VStack{
-                HStack{
-                    if user.id == loggedInUser.id {
-                        Button {
-                            // 作品を追加するアクション
-                        } label: {
-                            Image(systemName: "plus.square")
-                            Text("作品を追加する")
-                        }
-                    } else {
-                        Button {
-                            // お気に入りに登録するアクション
-                        } label: {
-                            Image(systemName: "bookmark.fill")
-                            Text("お気に入りに登録する")
+        VStack {
+            HStack {
+                if let currentUserId = authStateManager.currentUser?.uid, currentUserId == userProfileModel.user?.id {
+//                    Button {
+//                        // 作品を追加するアクション
+//                    } label: {
+//                        Image(systemName: "plus.square")
+//                        Text("作品を追加する")
+//                    }
+                    Button {
+                        authStateManager.signOut()
+                    } label: {
+                        Text("SignOut")
+                    }
+
+                
+                    
+                } else {
+                    Button {
+                        // お気に入りに登録するアクション
+                    } label: {
+                        Image(systemName: "bookmark.fill")
+                        Text("お気に入りに登録する")
+                    }
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    showProfileModal = true
+                }) {
+                    HStack {
+                        Text(userProfileModel.user?.name ?? "Loading...")
+                        if let user = userProfileModel.user {
+                            UserIcon(path: user.icon)
+                                .frame(width: 40, height: 40)
                         }
                     }
-                    
-                    Spacer()
-                    Text(user.name)
-                    UserIconSmall(user: user)
-                        .frame(width: 40,height: 40)
                 }
-                .padding(.horizontal)
-                
-                TitleView(user: user)
             }
-//        }
+            .padding(.horizontal)
+            
+            TitleView(user: userProfileModel.user ?? .dummy)
+
+            
+            // Profileモーダルの表示
+                .sheet(isPresented: $showProfileModal) {
+                    Profile(userId: authStateManager.currentUser?.uid ?? "")
+                }
+        }
+        .onAppear {
+            if let currentUser = authStateManager.currentUser {
+                print("Current User:", currentUser.uid) // UIDを表示するように変更
+                userProfileModel.fetchUserData(for: currentUser.uid)
+            } else {
+                print("No current user found.")
+            }
+        }
+
     }
 }
 
 struct Shelf_Previews: PreviewProvider {
     static var previews: some View {
-        Shelf(user: users["1001"]!)
+        Shelf()
     }
 }

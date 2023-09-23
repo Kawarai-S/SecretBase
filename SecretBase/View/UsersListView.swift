@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UsersListView: View {
-    var users: [User]
+    var users: [AppUser]
     
     var body: some View {
         List(users, id: \.id) { user in

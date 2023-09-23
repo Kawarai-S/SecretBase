@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserIconSmall: View {
-    var user:User
+    var user:AppUser
     var body: some View {
         Image("\(user.icon)")
             .resizable()

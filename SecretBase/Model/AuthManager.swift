@@ -16,6 +16,7 @@ class FirebaseAuthStateManager: ObservableObject {
     
     init() {
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            self.currentUser = user // この行を追加
             if let _ = user {
                 self.signInState = true
             } else {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Serch: View {
-    @ObservedObject private var viewModel = TitleListViewModel()
+    @ObservedObject private var viewModel = TitleListModel()
     @State private var keyword: String = ""
     @State private var selectedCategory: Title.Category?
     

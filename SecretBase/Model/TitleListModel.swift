@@ -8,7 +8,7 @@
 import Firebase
 import SwiftUI
 
-class TitleListViewModel: ObservableObject {
+class TitleListModel: ObservableObject {
     @Published var titles: [Title] = []
     
     private var db = Firestore.firestore()

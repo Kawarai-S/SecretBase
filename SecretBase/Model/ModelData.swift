@@ -8,7 +8,7 @@
 import Foundation
 
 public var titles:[String: Title] = load("TitleList.json")
-public var users: [String: User] = load("Users.json")
+public var users: [String: AppUser] = load("Users.json")
 
 
 func load<T: Decodable>(_ filename: String) -> T {

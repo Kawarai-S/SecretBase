@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SerchTitleView: View {
     var title:Title
-    var usersWithThisTitle: [User] {
+    var usersWithThisTitle: [AppUser] {
         let filteredUsers = users.values.filter { user in
             user.shelf.contains(where: { $0.itemId == title.id })
         }
@@ -17,7 +17,7 @@ struct SerchTitleView: View {
         return filteredUsers
     }
 
-    let loggedInUser: User = users["1001"]! 
+    let loggedInUser: AppUser = users["1001"]!
     
     var body: some View {
 //        NavigationView {
@@ -47,7 +47,7 @@ struct SerchTitleView: View {
                         Text("この作品を好きな人")
                             .padding(.top)
                         ForEach(usersWithThisTitle.prefix(3), id: \.id) { user in
-                            NavigationLink(destination: Shelf(user: user)) {
+                            NavigationLink(destination: Shelf()) {
                                 HStack {
                                     UserIconSmall(user: user)
                                         .frame(width: 32, height: 32)
