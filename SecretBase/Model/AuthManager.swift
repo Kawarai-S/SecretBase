@@ -16,15 +16,18 @@ class FirebaseAuthStateManager: ObservableObject {
     
     init() {
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let _ = user {
-                print("Sign-in")
+            if let user = user {
+                print("Logged in as: \(user.uid)")
+                self.currentUser = user
                 self.signInState = true
             } else {
-                print("Sign-out")
+                print("User not logged in")
+                self.currentUser = nil
                 self.signInState = false
             }
         }
     }
+
     
     deinit {
         Auth.auth().removeStateDidChangeListener(handle)
@@ -37,5 +40,26 @@ class FirebaseAuthStateManager: ObservableObject {
             print("Error")
         }
     }
+    
+    func signIn(withEmail email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
+            if let error = error {
+                completion(false, error)
+                return
+            }
+            completion(true, nil)
+        }
+    }
+    
+    func signUp(withEmail email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            if let error = error {
+                completion(false, error)
+                return
+            }
+            completion(true, nil)
+        }
+    }
+
 }
 

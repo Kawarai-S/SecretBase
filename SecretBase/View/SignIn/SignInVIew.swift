@@ -25,7 +25,7 @@ struct SignInVIew: View {
             .padding()
         }
         .sheet(isPresented: $isShowSheet) {
-            FirebaseUIView()
+            SignIn()
         }
     }
 }

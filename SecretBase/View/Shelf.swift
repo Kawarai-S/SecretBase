@@ -65,13 +65,12 @@ struct Shelf: View {
         }
         .onAppear {
             if let currentUser = authStateManager.currentUser {
-                print("Current User:", currentUser.uid) // UIDを表示するように変更
+                print("Current User in onAppear:", currentUser.uid)
                 userProfileModel.fetchUserData(for: currentUser.uid)
             } else {
-                print("No current user found.")
+                print("No current user found in onAppear.")
             }
         }
-
     }
 }
 
