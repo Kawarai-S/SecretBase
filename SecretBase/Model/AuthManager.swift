@@ -10,6 +10,8 @@ import FirebaseAuth
 class FirebaseAuthStateManager: ObservableObject {
     @Published var signInState: Bool = false
     @Published var currentUser: User?
+    @Published var didSignInSuccessfully: Bool = false
+
     static let shared = FirebaseAuthStateManager()
     
     private var handle: AuthStateDidChangeListenerHandle!
@@ -44,9 +46,13 @@ class FirebaseAuthStateManager: ObservableObject {
     func signIn(withEmail email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             if let error = error {
+                self.didSignInSuccessfully = false
+                self.signInState = false
                 completion(false, error)
                 return
             }
+            self.didSignInSuccessfully = true
+            self.signInState = true
             completion(true, nil)
         }
     }

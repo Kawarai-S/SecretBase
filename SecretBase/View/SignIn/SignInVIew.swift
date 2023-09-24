@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SignInVIew: View {
     @State var isShowSheet = false
-    @State var isFullScreen = false
     var body: some View {
         VStack{
             Button(action: {
@@ -18,14 +17,14 @@ struct SignInVIew: View {
                 Text("Sign-In")
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(.blue)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(30)
             }
             .padding()
         }
-        .sheet(isPresented: $isShowSheet) {
-            SignIn()
+        .fullScreenCover(isPresented: $isShowSheet) {
+            SignIn(isShowSheet: $isShowSheet)
         }
     }
 }

@@ -11,48 +11,54 @@ struct ContentView: View {
     @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
     
     var body: some View {
-        if authStateManager.signInState {
-            TabView {
-                NavigationView {
-                    Shelf()
-                        .navigationBarHidden(true)
+        Group {
+            if authStateManager.didSignInSuccessfully || authStateManager.signInState {
+                TabView {
+                    NavigationView {
+                        Shelf()
+                            .navigationBarHidden(true)
+                    }
+                    .background(Color.white.ignoresSafeArea()) // 背景色の設定
+                    .tabItem {
+                        Label("My Shelf", systemImage: "books.vertical")
+                    }
+                    
+                    NavigationView {
+                        Serch()
+                            .navigationBarHidden(true)
+                    }
+                    .background(Color.white.ignoresSafeArea()) // 背景色の設定
+                    .tabItem {
+                        Label("Serch", systemImage: "magnifyingglass")
+                    }
+                    
+                    NavigationView {
+                        Text("通知とか")
+                            .navigationBarHidden(true)
+                    }
+                    .background(Color.white.ignoresSafeArea()) // 背景色の設定
+                    .tabItem {
+                        Label("Notification", systemImage: "bell.fill")
+                    }
+                    
+                    NavigationView {
+                        Text("自分のお気に入りレビューとか")
+                            .navigationBarHidden(true)
+                    }
+                    .background(Color.white.ignoresSafeArea()) // 背景色の設定
+                    .tabItem {
+                        Label("Bookmark", systemImage: "bookmark.fill")
+                    }
                 }
-                .background(Color.white.ignoresSafeArea()) // 背景色の設定
-                .tabItem {
-                    Label("My Shelf", systemImage: "books.vertical")
-                }
-                
-                NavigationView {
-                    Serch()
-                        .navigationBarHidden(true)
-                }
-                .background(Color.white.ignoresSafeArea()) // 背景色の設定
-                .tabItem {
-                    Label("Serch", systemImage: "magnifyingglass")
-                }
-                
-                NavigationView {
-                    Text("通知とか")
-                        .navigationBarHidden(true)
-                }
-                .background(Color.white.ignoresSafeArea()) // 背景色の設定
-                .tabItem {
-                    Label("Notification", systemImage: "bell.fill")
-                }
-                
-                NavigationView {
-                    Text("自分のお気に入りレビューとか")
-                        .navigationBarHidden(true)
-                }
-                .background(Color.white.ignoresSafeArea()) // 背景色の設定
-                .tabItem {
-                    Label("Bookmark", systemImage: "bookmark.fill")
-                }
+            } else {
+                SignInVIew()
             }
-        } else {
-            SignInVIew()
         }
-        
+        .onChange(of: authStateManager.didSignInSuccessfully) { newValue in
+            if newValue {
+                authStateManager.didSignInSuccessfully = false
+            }
+        }
     }
 }
 

@@ -11,6 +11,7 @@ struct SignIn: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @ObservedObject var authManager = FirebaseAuthStateManager.shared
+    @Binding var isShowSheet: Bool  // <-- 追加
     
     var body: some View {
         VStack(spacing: 20) {
@@ -28,13 +29,15 @@ struct SignIn: View {
                 authManager.signIn(withEmail: email, password: password) { success, error in
                     if success {
                         print("Signed In Successfully!")
+                        isShowSheet = false  // <-- サインイン成功時に閉じる
                     } else {
                         print("Error: \(error?.localizedDescription ?? "Unknown Error")")
+                        isShowSheet = false  // <-- サインイン失敗時にも閉じる
                     }
                 }
             }
             .padding()
-            .background(Color.green)
+            .background(Color.blue)
             .foregroundColor(.white)
             .cornerRadius(5.0)
         }
@@ -42,8 +45,8 @@ struct SignIn: View {
     }
 }
 
-struct SignIn_Previews: PreviewProvider {
-    static var previews: some View {
-        SignIn()
-    }
-}
+//struct SignIn_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignIn()
+//    }
+//}
