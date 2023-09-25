@@ -12,7 +12,7 @@ struct TitleDetail: View {
     
     var body: some View {
         HStack {
-            TitleImage(image:title.image)
+            SingleTitleImageView(title: title)
             VStack(alignment: .leading) {
                 Text(title.title)
                     .font(.title3)
@@ -51,11 +51,11 @@ struct TitleDetail: View {
     }
 }
 
-struct TitleDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        if let sampleTitle = titles["001"] {
-            TitleDetail(title: sampleTitle)
-        } else {
-            Text("Sample title not found.")
-        }    }
-}
+//struct TitleDetail_Previews: PreviewProvider {
+//    static var previews: some View {
+//        if let sampleTitle = titles["001"] {
+//            TitleDetail(title: sampleTitle)
+//        } else {
+//            Text("Sample title not found.")
+//        }    }
+//}

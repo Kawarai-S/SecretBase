@@ -65,8 +65,12 @@ struct Shelf: View {
         }
         .onAppear {
             if let currentUser = authStateManager.currentUser {
-                print("Current User in onAppear:", currentUser.uid)
-                userProfileModel.fetchUserData(for: currentUser.uid)
+                userProfileModel.fetchUserData(for: currentUser.uid) {
+                    // データが取得された後の処理
+                    if let user = self.userProfileModel.user {
+                        print("User's Shelf: \(user.shelf)")
+                    }
+                }
             } else {
                 print("No current user found in onAppear.")
             }
@@ -77,5 +81,7 @@ struct Shelf: View {
 struct Shelf_Previews: PreviewProvider {
     static var previews: some View {
         Shelf()
+            .environmentObject(UserProfileModel())
     }
 }
+

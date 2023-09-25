@@ -18,7 +18,7 @@ class UserProfileModel: ObservableObject {
     }
     
     
-    func fetchUserData(for userId: String? = nil) {
+    func fetchUserData(for userId: String? = nil, completion: (() -> Void)? = nil) {
         let targetUserId: String
         if let userId = userId {
             targetUserId = userId
@@ -48,6 +48,7 @@ class UserProfileModel: ObservableObject {
             self.fetchShelf(for: targetUserId) { shelfItems in
                 let user = AppUser(id: targetUserId, name: userName, icon: userIcon, profile: userProfile, shelf: shelfItems ?? [])
                 self.user = user
+                completion?() 
             }
         }
     }
@@ -57,30 +58,62 @@ class UserProfileModel: ObservableObject {
         let shelfRef = firestore.collection("Users").document(userId).collection("shelf")
         
         shelfRef.getDocuments { shelfSnapshot, error in
+            // エラーがある場合、そのエラーを出力
+            if let error = error {
+                print("Error fetching shelf documents: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
             guard let shelfSnapshot = shelfSnapshot else {
                 completion(nil)
                 return
             }
             
+            // ドキュメントの数を出力
+            print("Number of documents in shelf: \(shelfSnapshot.documents.count)")
+            
             var shelfItems: [ShelfItem] = []
             for shelfDoc in shelfSnapshot.documents {
                 let shelfData = shelfDoc.data()
                 if
-                    let itemId = shelfData["itemId"] as? String,
-                    let review = shelfData["review"] as? String,
-                    let likesArray = shelfData["likes"] as? [[String: Any]] {
+                    let itemId = shelfData["itemid"] as? String,
+                    let review = shelfData["review"] as? String
+                {
                     var likes: [Like] = []
-                    for likeData in likesArray {
-                        if let userId = likeData["userId"] as? String {
-                            likes.append(Like(userId: userId))
+                    if let likesArray = shelfData["likes"] as? [[String: Any]] {
+                        for likeData in likesArray {
+                            if let userId = likeData["userId"] as? String {
+                                likes.append(Like(userId: userId))
+                            } else {
+                                print("Error parsing likeData in document \(shelfDoc.documentID): \(likeData)")
+                            }
                         }
+                    } else {
+                        print("Likes data missing or not in expected format in document \(shelfDoc.documentID)")
                     }
                     shelfItems.append(ShelfItem(itemId: itemId, review: review, likes: likes))
+                } else {
+                    print("Error parsing shelfData in document \(shelfDoc.documentID): \(shelfData)")
                 }
             }
+            
+            // completionが呼び出される前のshelfItemsの状態を出力
+            print("Completion called with \(shelfItems.count) items.")
             completion(shelfItems)
         }
     }
 }
 
+
+extension ShelfItem {
+    func likedUsers(from users: [AppUser]) -> [AppUser] {
+        // likesがnilの場合は空の配列を返す
+        guard let likes = self.likes else { return [] }
+        
+        return likes.compactMap { like in
+            return users.first { $0.id == like.userId }
+        }
+    }
+}
 

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
-    
+    @ObservedObject private var userProfileModel = UserProfileModel()  // ← 1. UserProfileModelをインスタンス化
+
     var body: some View {
         Group {
             if authStateManager.didSignInSuccessfully || authStateManager.signInState {
@@ -50,6 +51,7 @@ struct ContentView: View {
                         Label("Bookmark", systemImage: "bookmark.fill")
                     }
                 }
+                .environmentObject(userProfileModel)  // ← 2. TabView全体にUserProfileModelを提供
             } else {
                 SignInVIew()
             }

@@ -17,9 +17,9 @@ public struct AppUser: Codable {
 
 public struct ShelfItem: Codable {
     let itemId: String
-    let review: String
+    let review: String?
 //    let isRegistered: Bool
-    let likes: [Like]
+    let likes: [Like]?
 }
 
 public struct Like: Codable {
