@@ -117,3 +117,62 @@ extension ShelfItem {
     }
 }
 
+
+func addShelfItem(item: ShelfItem, for userId: String, completion: @escaping (Bool) -> Void) {
+    let firestore = Firestore.firestore()
+    let shelfRef = firestore.collection("Users").document(userId).collection("shelf")
+    
+    let data: [String: Any] = [
+        "itemid": item.itemId,
+        "review": item.review ?? "",
+        "likes": item.likes?.map { ["userId": $0.userId] } ?? []
+    ]
+    
+    shelfRef.addDocument(data: data) { error in
+        if let error = error {
+            print("Error adding shelf item: \(error.localizedDescription)")
+            completion(false)
+        } else {
+            completion(true)
+        }
+    }
+}
+
+func addTitleToShelf(for title: Title, completion: @escaping (Bool) -> Void) {
+    let shelfItem = ShelfItem(itemId: title.id, review: nil, likes: nil)
+    if let currentUserId = Auth.auth().currentUser?.uid {
+        addShelfItem(item: shelfItem, for: currentUserId) { success in
+            completion(success)
+        }
+    } else {
+        completion(false)
+    }
+}
+
+func submitReview(for itemId: String, reviewText: String, completion: @escaping (ReviewAlertType) -> Void) {
+    let shelfItem = ShelfItem(itemId: itemId, review: reviewText, likes: nil)
+    if let currentUserId = Auth.auth().currentUser?.uid {
+        addShelfItem(item: shelfItem, for: currentUserId) { success in
+            if success {
+                completion(.success)
+            } else {
+                completion(.error)
+            }
+        }
+    } else {
+        completion(.error) // 失敗
+    }
+}
+
+enum ReviewAlertType: Identifiable {
+    case success, error
+    
+    var id: Int {
+        switch self {
+        case .success:
+            return 1
+        case .error:
+            return 2
+        }
+    }
+    }

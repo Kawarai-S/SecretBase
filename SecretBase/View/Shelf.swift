@@ -16,19 +16,19 @@ struct Shelf: View {
         VStack {
             HStack {
                 if let currentUserId = authStateManager.currentUser?.uid, currentUserId == userProfileModel.user?.id {
-//                    Button {
-//                        // 作品を追加するアクション
-//                    } label: {
-//                        Image(systemName: "plus.square")
-//                        Text("作品を追加する")
-//                    }
                     Button {
-                        authStateManager.signOut()
+                        // 作品を追加するアクション
                     } label: {
-                        Text("SignOut")
+                        Image(systemName: "plus.square")
+                        Text("作品を追加する")
                     }
-
-                
+                    //                    Button {
+                    //                        authStateManager.signOut()
+                    //                    } label: {
+                    //                        Text("SignOut")
+                    //                    }
+                    
+                    
                     
                 } else {
                     Button {
@@ -56,7 +56,7 @@ struct Shelf: View {
             .padding(.horizontal)
             
             TitleView(user: userProfileModel.user ?? .dummy)
-
+            
             
             // Profileモーダルの表示
                 .sheet(isPresented: $showProfileModal) {

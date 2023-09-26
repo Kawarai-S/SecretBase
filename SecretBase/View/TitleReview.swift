@@ -10,20 +10,17 @@ import SwiftUI
 struct TitleReview: View {
     var user: AppUser
     var item: ShelfItem
+    @EnvironmentObject var userProfileModel: UserProfileModel  // ← 追加: UserProfileModelを参照
     
     var titleForItem: Title? {
-        return titles[item.itemId]
+        return userProfileModel.titleListModel.titles.first { $0.id == item.itemId }  // ← titles の代わりに userProfileModel.titleListModel.titles を使用
     }
     
     var body: some View {
         ScrollView {
             if let title = titleForItem {
-                // ここでは簡易的なTitleDetailプレースホルダを表示します
-                VStack {
-                    Text(title.title).font(.title)
-                    Text("これはTitleDetailのプレースホルダです")
-                }
-                .padding()
+                TitleDetail(title: title)
+                    .padding()
                 
                 if let review = item.review, !review.isEmpty {
                     VStack(alignment: .leading) {
@@ -56,6 +53,7 @@ struct TitleReview: View {
         }
     }
 }
+
 
 //extension ShelfItem {
 //    func likedUsers(from allUsers: [String: AppUser]) -> [AppUser] {

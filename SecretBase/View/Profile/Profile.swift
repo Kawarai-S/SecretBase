@@ -35,6 +35,17 @@ struct Profile: View {
             } else {
                 Text("Loading or user not found...")
             }
+            HStack{
+                Spacer()
+                if let currentUserId = authManager.currentUser?.uid, currentUserId == userProfileModel.user?.id {
+                    Button {
+                        authManager.signOut()
+                    } label: {
+                        Text("SignOut")
+                    }
+                }
+            }
+
         }
         .onAppear {
             self.userProfileModel.fetchUserData(for: userId)

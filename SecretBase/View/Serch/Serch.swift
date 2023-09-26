@@ -8,54 +8,68 @@
 import SwiftUI
 
 struct Serch: View {
-    @ObservedObject private var viewModel = TitleListModel()
+    @ObservedObject private var viewModel = TitleSearchModel() // 1. ViewModelを変更
     @State private var keyword: String = ""
     @State private var selectedCategory: Title.Category?
+    @State private var imageLoaders: [String: TitleImageLoader] = [:]
     
-    var filteredTitles:[Title]{
-        guard !keyword.isEmpty else { return [] }
-        let lowercasedKeyword = keyword.lowercased()
-        return viewModel.titles.filter { title in
-            title.title.lowercased().contains(lowercasedKeyword) && (selectedCategory == nil || title.category == selectedCategory)
+    private func imageLoader(for title: Title) -> TitleImageLoader {
+        if let loader = imageLoaders[title.id] {
+            return loader
         }
+        let loader = TitleImageLoader()
+        imageLoaders[title.id] = loader
+        return loader
     }
     
     var body: some View {
-        VStack{
-            TextField("キーワードを入力",text: $keyword)
-                .padding(10)
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
-                .padding(.horizontal)
+        VStack {
+            HStack {
+                TextField("キーワードを入力", text: $keyword)
+                    .padding(10)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
+                
+                Button("検索") {
+                    viewModel.fetchData(matching: keyword, category: selectedCategory)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(Color.blue)
+                .cornerRadius(8)
+            }.padding(.horizontal)
+            
             Picker("カテゴリ", selection: $selectedCategory) {
                 Text("すべて").tag(Title.Category?.none)
-                ForEach(Title.Category.allCases, id:\.self) { category in
+                ForEach(Title.Category.allCases, id: \.self) { category in
                     Text(category.rawValue).tag(Optional(category))
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
             
-            List(filteredTitles, id: \.id){ title in
-                NavigationLink(destination: Text("Details")){ // 仮の遷移先
-                    HStack{
-                        // Image(title.image) // TODO: 画像の表示は別の方法で行う
-                        Text(title.image) // 仮で画像名を表示
-//                            .resizable()
-//                            .scaledToFit()
-                            .frame(width: 60, height: 80)
+            List(viewModel.titles, id: \.id) { title in
+                NavigationLink(destination: SerchTitleView(title: title)) {
+                    HStack {
+                        let loader = self.imageLoader(for: title)
+                        if let uiImage = loader.image {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 60, height: 80)
+                        } else {
+                            Rectangle()
+                                .foregroundColor(.gray)
+                                .frame(width: 60, height: 80)
+                        }
                         Text(title.title)
                     }
+                    .onAppear {
+                        self.imageLoader(for: title).load(from: title.image)
+                    }
                 }
-                
             }
             .listStyle(.inset)
-        }
-        .onAppear() {
-            viewModel.fetchData()
-            // デバッグ用: データが取得できたか確認
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                print(viewModel.titles)
-            }
         }
     }
 }
@@ -65,4 +79,3 @@ struct Serch_Previews: PreviewProvider {
         Serch()
     }
 }
-
