@@ -11,7 +11,11 @@ struct SignIn: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @ObservedObject var authManager = FirebaseAuthStateManager.shared
-    @Binding var isShowSheet: Bool  // <-- 追加
+    
+    // サインインが成功したかどうかを判断するState変数
+    @State private var isSignInSuccessful: Bool = false
+    // アラートを表示するかどうかを判断するState変数
+    @State private var showAlert: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -29,10 +33,10 @@ struct SignIn: View {
                 authManager.signIn(withEmail: email, password: password) { success, error in
                     if success {
                         print("Signed In Successfully!")
-                        isShowSheet = false  // <-- サインイン成功時に閉じる
+                        isSignInSuccessful = true
                     } else {
                         print("Error: \(error?.localizedDescription ?? "Unknown Error")")
-                        isShowSheet = false  // <-- サインイン失敗時にも閉じる
+                        showAlert = true  // アラートを表示する
                     }
                 }
             }
@@ -42,8 +46,15 @@ struct SignIn: View {
             .cornerRadius(5.0)
         }
         .padding()
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Error"), message: Text("Sign in failed."), dismissButton: .default(Text("OK")))
+        }
+        .fullScreenCover(isPresented: $isSignInSuccessful, content: {
+            ContentView()
+        })
     }
 }
+
 
 //struct SignIn_Previews: PreviewProvider {
 //    static var previews: some View {

@@ -22,11 +22,6 @@ struct Shelf: View {
                         Image(systemName: "plus.square")
                         Text("作品を追加する")
                     }
-                    //                    Button {
-                    //                        authStateManager.signOut()
-                    //                    } label: {
-                    //                        Text("SignOut")
-                    //                    }
                     
                     
                     

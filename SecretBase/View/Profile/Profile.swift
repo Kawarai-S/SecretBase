@@ -27,7 +27,7 @@ struct Profile: View {
                 Text(user.name)
                 Text(user.profile)
                 
-                // ログインユーザーで、かつ、自分自身のプロフィールを表示している場合に編集リンクを表示
+                // ログインユーザーで、かつ、自分自身のプロフィールを表示している場合に編集リンクを表示します
                 if authManager.signInState, authManager.currentUser?.uid == userId {
                     NavigationLink("Edit Profile", destination: ProfileEditor(user: user))
                 }

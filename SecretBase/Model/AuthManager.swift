@@ -60,9 +60,11 @@ class FirebaseAuthStateManager: ObservableObject {
     func signUp(withEmail email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
             if let error = error {
+                print("SignUp Error: \(error.localizedDescription)") // ここにログを追加
                 completion(false, error)
                 return
             }
+            print("SignUp Success!") // ここにログを追加
             completion(true, nil)
         }
     }

@@ -10,10 +10,12 @@ import SwiftUI
 struct SignUp: View {
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var navigateToAdditionalInfo: Bool = false  // ← 初期値を設定
+    @State private var showAlert = false
+    @State private var errorMessage = ""
+    @State private var navigateToAdditionalInfo: Bool = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 TextField("Email", text: $email)
                     .padding()
@@ -26,22 +28,26 @@ struct SignUp: View {
                 Button("Sign Up") {
                     FirebaseAuthStateManager.shared.signUp(withEmail: email, password: password) { success, error in
                         if success {
-                            self.navigateToAdditionalInfo = true  // ← 'self.'を追加
+                            self.navigateToAdditionalInfo = true
                         } else {
-                            // Handle error (e.g., show an alert)
+                            self.errorMessage = error?.localizedDescription ?? "Unknown error"
+                            self.showAlert = true
                         }
                     }
                 }
-                
-                NavigationLink(destination: AdditionalInfoView(), isActive: $navigateToAdditionalInfo) {
-                    EmptyView()
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
                 }
-                .hidden() // NavigationLinkを非表示にする
+                .navigationDestination(isPresented: $navigateToAdditionalInfo) {
+                    AdditionalInfoView()
+                }
+                
             }
             .padding()
         }
     }
 }
+
 
 
 //struct SingUpView_Previews: PreviewProvider {

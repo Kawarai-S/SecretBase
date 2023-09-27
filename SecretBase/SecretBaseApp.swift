@@ -32,13 +32,30 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     
 @main
-struct YourApp: App {
+struct SecretBaseApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var firebaseInitializer = FirebaseInitializer()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if !firebaseInitializer.isInitialized {
+                LoadingView()
+            } else if firebaseInitializer.isSignedIn {
+                ContentView()
+            } else {
+                SignInView()
+            }
         }
+    }
+}
+
+class FirebaseInitializer: ObservableObject {
+    @Published var isInitialized: Bool = false
+    @Published var isSignedIn: Bool = false
+    
+    init() {
+        isInitialized = true
+        isSignedIn = Auth.auth().currentUser != nil
     }
 }
