@@ -34,7 +34,14 @@ struct ContentView: View {
                     }
                     
                     NavigationView {
-                        Text("通知とか")
+                        VStack {
+                            Text("通知とか")
+                            Button {
+                                authStateManager.signOut()
+                            } label: {
+                                Text("SignOut")
+                            }
+                        }
                             .navigationBarHidden(true)
                     }
                     .background(Color.white.ignoresSafeArea()) // 背景色の設定
@@ -53,7 +60,7 @@ struct ContentView: View {
                 }
                 .environmentObject(userProfileModel)  // ← 2. TabView全体にUserProfileModelを提供
             } else {
-                SignInVIew()
+                SignInView()
             }
         }
         .onChange(of: authStateManager.didSignInSuccessfully) { newValue in

@@ -2,7 +2,9 @@
 
 import SwiftUI
 import Combine
+import FirebaseFirestore
 import FirebaseStorage
+import FirebaseAuth
 
 class UserIconLoader: ObservableObject {
     @Published var image: UIImage?
@@ -59,5 +61,68 @@ class TitleImageLoader: ObservableObject {
     }
 }
 
+func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
+    let size = image.size
+    let widthRatio  = targetSize.width  / size.width
+    let heightRatio = targetSize.height / size.height
+    
+    var newSize: CGSize
+    if(widthRatio > heightRatio) {
+        newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+    } else {
+        newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+    }
+    
+    let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+    UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+    image.draw(in: rect)
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return newImage
+}
 
-
+func uploadImage(selectedImage: UIImage?, name: String, profile: String, completion: @escaping (Bool) -> Void) {
+    // Image compression
+    guard let data = selectedImage?.jpegData(compressionQuality: 0.5) else {
+        completion(false)
+        return
+    }
+    
+    // Upload to Firebase Storage
+    let storageRef = Storage.storage().reference().child(UUID().uuidString + ".jpeg")
+    storageRef.putData(data, metadata: nil) { _, error in
+        guard error == nil else {
+            print("Error uploading image: \(error!)")
+            completion(false)
+            return
+        }
+        
+        storageRef.downloadURL { url, error in
+            guard let downloadURL = url else {
+                print("Error getting download URL: \(error!)")
+                completion(false)
+                return
+            }
+            
+            // Save data to Firestore
+            let firestore = Firestore.firestore()
+            if let currentUserId = Auth.auth().currentUser?.uid {
+                firestore.collection("Users").document(currentUserId).setData([
+                    "name": name,
+                    "profile": profile,
+                    "icon": downloadURL.absoluteString
+                ]) { error in
+                    if let error = error {
+                        print("Error saving user data: \(error)")
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
+                }
+            } else {
+                completion(false)
+            }
+        }
+    }
+}
