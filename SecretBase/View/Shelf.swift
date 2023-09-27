@@ -15,24 +15,15 @@ struct Shelf: View {
     var body: some View {
         VStack {
             HStack {
-                if let currentUserId = authStateManager.currentUser?.uid, currentUserId == userProfileModel.user?.id {
-                    Button {
-                        // 作品を追加するアクション
-                    } label: {
-                        Image(systemName: "plus.square")
-                        Text("作品を追加する")
-                    }
-                    
-                    
-                    
-                } else {
-                    Button {
-                        // お気に入りに登録するアクション
-                    } label: {
-                        Image(systemName: "bookmark.fill")
-                        Text("お気に入りに登録する")
-                    }
+                
+                Button {
+                    // 作品を追加するアクション
+                } label: {
+                    Image(systemName: "plus.square")
+                    Text("作品を追加する")
                 }
+                
+                
                 
                 Spacer()
                 
