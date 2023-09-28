@@ -34,8 +34,12 @@ func getUsersWithItem(itemId: String, completion: @escaping ([AppUser]) -> Void)
             let userId = userDoc.documentID
             let shelfRef = usersRef.document(userId).collection("shelf").whereField("itemid", isEqualTo: itemId)
             shelfRef.getDocuments { (shelfSnapshot, shelfError) in
-                print("User \(userId) has \(shelfSnapshot?.documents.count ?? 0) items in shelf with matching itemId.")
                 if let _ = shelfError {
+                    group.leave()
+                    return
+                }
+                
+                guard let shelfSnapshot = shelfSnapshot, !shelfSnapshot.documents.isEmpty else {
                     group.leave()
                     return
                 }
@@ -51,24 +55,8 @@ func getUsersWithItem(itemId: String, completion: @escaping ([AppUser]) -> Void)
                     return
                 }
                 
-//                // ここでshelfDataArrayからShelfItemの配列を作成します。
-//                var shelfItems: [ShelfItem] = []
-//                for shelfData in shelfDataArray {
-//                    if let itemId = shelfData["itemid"] as? String {
-//                        let review = shelfData["review"] as? String
-//                        let likesArray = shelfData["likes"] as? [[String: Any]]
-//                        let likes = likesArray?.compactMap { likeData in
-//                            return Like(userId: likeData["userId"] as! String)
-//                        }
-//                        let shelfItem = ShelfItem(itemId: itemId, review: review, likes: likes)
-//                        shelfItems.append(shelfItem)
-//                    }
-//                }
-                
                 let user = AppUser(id: userId, name: name, icon: icon, profile: profile, shelf: [])
                 usersWithItem.append(user)
-
-                
                 group.leave()
             }
         }
@@ -79,6 +67,7 @@ func getUsersWithItem(itemId: String, completion: @escaping ([AppUser]) -> Void)
         }
     }
 }
+
 
 class SerchTitleViewModel: ObservableObject {
     @Published var usersWithThisTitle: [AppUser] = []

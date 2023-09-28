@@ -14,8 +14,6 @@ struct OtherUserShelf: View {
     var body: some View {
         VStack {
             HStack {
-                Spacer()
-                
                 Button {
                     // お気に入りに登録するアクション
                 } label: {

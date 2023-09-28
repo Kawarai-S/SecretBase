@@ -67,10 +67,7 @@ struct SerchTitleView: View {
                             .cancel()  // キャンセルボタン
                         ])
                     }
-                    
-                    
-                    
-                    
+                    //作品を棚に登録している人を表示
                     Text("この作品を好きな人")
                         .padding(.top)
                     ForEach(viewModel.usersWithThisTitle.prefix(3), id: \.id) { user in
