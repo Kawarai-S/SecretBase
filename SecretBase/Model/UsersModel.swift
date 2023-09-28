@@ -117,7 +117,7 @@ extension ShelfItem {
     }
 }
 
-
+//作品を棚に追加する
 func addShelfItem(item: ShelfItem, for userId: String, completion: @escaping (Bool) -> Void) {
     let firestore = Firestore.firestore()
     let shelfRef = firestore.collection("Users").document(userId).collection("shelf")
@@ -149,6 +149,7 @@ func addTitleToShelf(for title: Title, completion: @escaping (Bool) -> Void) {
     }
 }
 
+//レビュー投稿
 func submitReview(for itemId: String, reviewText: String, completion: @escaping (ReviewAlertType) -> Void) {
     let shelfItem = ShelfItem(itemId: itemId, review: reviewText, likes: nil)
     if let currentUserId = Auth.auth().currentUser?.uid {
@@ -175,4 +176,4 @@ enum ReviewAlertType: Identifiable {
             return 2
         }
     }
-    }
+}
