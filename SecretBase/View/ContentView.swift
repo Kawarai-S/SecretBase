@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
-    @ObservedObject private var userProfileModel = UserProfileModel()  // ← 1. UserProfileModelをインスタンス化
+    @ObservedObject private var userProfileModel = UserProfileModel()  
 
     var body: some View {
         Group {
             if authStateManager.didSignInSuccessfully || authStateManager.signInState {
+                //メインコンテンツ
                 TabView {
                     NavigationView {
                         Shelf()
@@ -28,7 +29,7 @@ struct ContentView: View {
                         Serch()
                             .navigationBarHidden(true)
                     }
-                    .background(Color.white.ignoresSafeArea()) // 背景色の設定
+                    .background(Color.white.ignoresSafeArea())
                     .tabItem {
                         Label("Serch", systemImage: "magnifyingglass")
                     }
@@ -44,7 +45,7 @@ struct ContentView: View {
                         }
                             .navigationBarHidden(true)
                     }
-                    .background(Color.white.ignoresSafeArea()) // 背景色の設定
+                    .background(Color.white.ignoresSafeArea())
                     .tabItem {
                         Label("Notification", systemImage: "bell.fill")
                     }
@@ -53,7 +54,7 @@ struct ContentView: View {
                         Text("自分のお気に入りレビューとか")
                             .navigationBarHidden(true)
                     }
-                    .background(Color.white.ignoresSafeArea()) // 背景色の設定
+                    .background(Color.white.ignoresSafeArea())
                     .tabItem {
                         Label("Bookmark", systemImage: "bookmark.fill")
                     }

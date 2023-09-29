@@ -50,8 +50,8 @@ struct SignUp: View {
 
 
 
-//struct SingUpView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SingUp()
-//    }
-//}
+struct SingUp_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUp()
+    }
+}
