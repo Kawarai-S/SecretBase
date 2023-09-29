@@ -1,5 +1,5 @@
 //
-//  TitleSerchModel.swift
+//  TitleSearchModel.swift
 //  SecretBase
 //
 //  Created by 瓦井つばさ on 2023/09/25.

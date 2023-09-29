@@ -1,5 +1,5 @@
 //
-//  Serch.swift
+//  Search.swift
 //  SecretBase
 //
 //  Created by 瓦井つばさ on 2023/09/05.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Serch: View {
+struct Search: View {
     @ObservedObject private var viewModel = TitleSearchModel() // 1. ViewModelを変更
     @State private var keyword: String = ""
     @State private var selectedCategory: Title.Category?
@@ -49,7 +49,7 @@ struct Serch: View {
             .padding(.horizontal)
             
             List(viewModel.titles, id: \.id) { title in
-                NavigationLink(destination: SerchTitleView(title: title)) {
+                NavigationLink(destination: SearchTitleView(title: title)) {
                     HStack {
                         let loader = self.imageLoader(for: title)
                         if let uiImage = loader.image {
@@ -74,8 +74,8 @@ struct Serch: View {
     }
 }
 
-struct Serch_Previews: PreviewProvider {
+struct Search_Previews: PreviewProvider {
     static var previews: some View {
-        Serch()
+        Search()
     }
 }

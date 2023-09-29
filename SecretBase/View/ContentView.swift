@@ -26,12 +26,12 @@ struct ContentView: View {
                     }
                     
                     NavigationView {
-                        Serch()
+                        Search()
                             .navigationBarHidden(true)
                     }
                     .background(Color.white.ignoresSafeArea())
                     .tabItem {
-                        Label("Serch", systemImage: "magnifyingglass")
+                        Label("Search", systemImage: "magnifyingglass")
                     }
                     
                     NavigationView {
