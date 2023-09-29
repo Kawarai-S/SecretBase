@@ -10,47 +10,24 @@ import Firebase
 
 class TitleSearchModel: ObservableObject {
     @Published var titles: [Title] = []
+    @Published var allTitles: [Title] = []  // Firestoreから全件取得したデータを保持するためのプロパティ
+    @Published var filteredTitles: [Title] = []
     
     private var db = Firestore.firestore()
     
-    // getNextStringメソッドの追加
-    private func getNextString(_ string: String) -> String? {
-        guard let lastChar = string.last, let lastScalarValue = lastChar.asciiValue else { return nil }
-        
-        let nextScalar = UnicodeScalar(lastScalarValue + 1)
-        let nextString = string.dropLast() + String(Character(nextScalar))
-        return String(nextString)
-    }
-    
-    func fetchData(matching keyword: String? = nil, category: Title.Category? = nil) {
-        var query: Query = db.collection("TitleList")
-        
-        // キーワードの処理を修正
-        if let keyword = keyword, !keyword.isEmpty {
-            if let nextString = getNextString(keyword) {
-                query = query.whereField("title", isGreaterThanOrEqualTo: keyword).whereField("title", isLessThanOrEqualTo: nextString)
-            }
-        }
-        
-        if let category = category {
-            query = query.whereField("category", isEqualTo: category.rawValue)
-        }
-        
-        query.addSnapshotListener { (querySnapshot, error) in
-            
+    func fetchAllData() {
+        db.collection("TitleList").addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 print("Error fetching titles: \(error.localizedDescription)")
                 return
             }
             
-            
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
-                
             }
             
-            self.titles = documents.compactMap { queryDocumentSnapshot in
+            self.allTitles = documents.compactMap { queryDocumentSnapshot in
                 let data = queryDocumentSnapshot.data()
                 let id = queryDocumentSnapshot.documentID
                 
@@ -72,14 +49,12 @@ class TitleSearchModel: ObservableObject {
                        let salesDate = detailsMap["salesDate"] as? String {
                         details = .manga(Title.CategoryDetails.MangaDetails(author: author, publisherName: publisherName, salesDate: salesDate))
                     }
-                    
                 case .game:
                     if let label = detailsMap["label"] as? String,
                        let hardware = detailsMap["hardware"] as? String,
                        let salesDate = detailsMap["salesDate"] as? String {
                         details = .game(Title.CategoryDetails.GameDetails(label: label, hardware: hardware, salesDate: salesDate))
                     }
-                    
                 case .anime:
                     if let label = detailsMap["label"] as? String,
                        let broadcastDate = detailsMap["broadcastDate"] as? String {
@@ -96,5 +71,13 @@ class TitleSearchModel: ObservableObject {
             }
         }
     }
+    
+    // ローカルでのフィルタリングロジック
+    func filterData(with keyword: String?, category: Title.Category?) {
+        filteredTitles = titles.filter { title in
+            let matchesKeyword = keyword?.isEmpty ?? true || title.title.contains(keyword ?? "")
+            let matchesCategory = category == nil || title.category == category
+            return matchesKeyword && matchesCategory
+        }
+    }
 }
-
