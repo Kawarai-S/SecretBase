@@ -9,7 +9,8 @@ import SwiftUI
 
 struct OtherUserShelf: View {
     var userId: String
-    @ObservedObject private var userProfileModel = UserProfileModel()
+//    @ObservedObject private var userProfileModel = UserProfileModel()
+    @ObservedObject var userProfileModel: UserProfileModel  // ← @ObservedObjectを保持し、初期化は行わない
     
     var body: some View {
         VStack {
@@ -37,7 +38,7 @@ struct OtherUserShelf: View {
             }
             .padding(.horizontal)
             
-            TitleView(user: userProfileModel.user ?? .dummy)
+            TitleView(user: userProfileModel.user ?? .dummy, userProfileModel: userProfileModel)
         }
         .onAppear {
             userProfileModel.fetchUserData(for: userId) {
@@ -50,10 +51,10 @@ struct OtherUserShelf: View {
     }
 }
 
-struct OtherUserShelf_Previews: PreviewProvider {
-    static var previews: some View {
-        OtherUserShelf(userId: "testUserId")
-            .environmentObject(UserProfileModel())
-    }
-}
+//struct OtherUserShelf_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OtherUserShelf(userId: "testUserId")
+//            .environmentObject(UserProfileModel())
+//    }
+//}
 

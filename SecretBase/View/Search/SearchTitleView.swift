@@ -21,6 +21,8 @@ struct SearchTitleView: View {
         self.viewModel = SearchTitleViewModel(title: title)
     }
     
+    @ObservedObject var userProfileModel = UserProfileModel()  // ← 変更
+    
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     @State private var alertTitle: String = ""
@@ -71,7 +73,7 @@ struct SearchTitleView: View {
                     Text("この作品を好きな人")
                         .padding(.top)
                     ForEach(viewModel.usersWithThisTitle.prefix(3), id: \.id) { user in
-                        NavigationLink(destination: OtherUserShelf(userId:user.id)) {
+                        NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: userProfileModel)) {  // ← userProfileModelを渡す
                             HStack {
                                 UserIconSmall(user: user)
                                     .frame(width: 32, height: 32)
