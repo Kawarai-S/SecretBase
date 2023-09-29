@@ -69,7 +69,7 @@ func getUsersWithItem(itemId: String, completion: @escaping ([AppUser]) -> Void)
 }
 
 
-class SerchTitleViewModel: ObservableObject {
+class SearchTitleViewModel: ObservableObject {
     @Published var usersWithThisTitle: [AppUser] = []
     var title: Title
     

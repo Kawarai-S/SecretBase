@@ -1,5 +1,5 @@
 //
-//  SerchTitleView.swift
+//  SearchTitleView.swift
 //  SecretBase
 //
 //  Created by 瓦井つばさ on 2023/09/19.
@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct SerchTitleView: View {
+struct SearchTitleView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var title: Title
-    @ObservedObject private var viewModel: SerchTitleViewModel
+    @ObservedObject private var viewModel: SearchTitleViewModel
     
     @State private var showingActionSheet = false
     @State private var navigateToReviewInput = false
     
     init(title: Title) {
         self.title = title
-        self.viewModel = SerchTitleViewModel(title: title)
+        self.viewModel = SearchTitleViewModel(title: title)
     }
     
     @State private var showAlert: Bool = false
@@ -108,10 +108,10 @@ struct SerchTitleView: View {
 }
 
 
-struct SerchTitleView_Previews: PreviewProvider {
+struct SearchTitleView_Previews: PreviewProvider {
     static var previews: some View {
         if let sampleTitle = titles["013"] {
-            SerchTitleView(title: sampleTitle)
+            SearchTitleView(title: sampleTitle)
         } else {
             Text("Sample title not found.")
         }
