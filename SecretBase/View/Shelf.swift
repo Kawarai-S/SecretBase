@@ -41,7 +41,7 @@ struct Shelf: View {
             }
             .padding(.horizontal)
             
-            TitleView(user: userProfileModel.user ?? .dummy)
+            TitleView(user: userProfileModel.user ?? .dummy, userProfileModel: userProfileModel)
             // Profileモーダルの表示
                 .sheet(isPresented: $showProfileModal) {
                     Profile(userId: authStateManager.currentUser?.uid ?? "")
@@ -62,10 +62,10 @@ struct Shelf: View {
     }
 }
 
-struct Shelf_Previews: PreviewProvider {
-    static var previews: some View {
-        Shelf()
-            .environmentObject(UserProfileModel())
-    }
-}
+//struct Shelf_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Shelf()
+//            .environmentObject(UserProfileModel())
+//    }
+//}
 

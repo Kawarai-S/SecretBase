@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TitleView: View {
     var user: AppUser
-    @EnvironmentObject var userProfileModel: UserProfileModel
+//    @EnvironmentObject var userProfileModel: UserProfileModel
+    var userProfileModel=UserProfileModel()
+    
     
     var body: some View {
         ScrollView {
@@ -25,15 +27,14 @@ struct TitleView: View {
             }
         }
         .padding(.horizontal)
-    
     }
 }
 
 
 
-struct TitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        TitleView(user: AppUser.dummy)
-            .environmentObject(UserProfileModel())
-    }
-}
+//struct TitleView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TitleView(user: AppUser.dummy)
+//            .environmentObject(UserProfileModel())
+//    }
+//}
