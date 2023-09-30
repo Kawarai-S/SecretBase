@@ -86,14 +86,15 @@ func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
 }
 
 func uploadImage(selectedImage: UIImage?, name: String, profile: String, completion: @escaping (Bool) -> Void) {
-    // Image compression
-    guard let data = selectedImage?.jpegData(compressionQuality: 0.5) else {
+    guard let resizedImage = resizeImage(image: selectedImage!, targetSize: CGSize(width: 250, height: 250)),
+          let data = resizedImage.jpegData(compressionQuality: 0.5) else {
         completion(false)
         return
     }
     
-    // Upload to Firebase Storage
-    let storageRef = Storage.storage().reference().child(UUID().uuidString + ".jpeg")
+    let fileName = UUID().uuidString + ".jpeg"
+    let storageRef = Storage.storage().reference().child("UserIcon").child(fileName)
+    
     storageRef.putData(data, metadata: nil) { _, error in
         guard error == nil else {
             print("Error uploading image: \(error!)")
@@ -108,13 +109,14 @@ func uploadImage(selectedImage: UIImage?, name: String, profile: String, complet
                 return
             }
             
-            // Save data to Firestore
+            let relativePath = "UserIcon/" + fileName
+            
             let firestore = Firestore.firestore()
             if let currentUserId = Auth.auth().currentUser?.uid {
                 firestore.collection("Users").document(currentUserId).setData([
                     "name": name,
                     "profile": profile,
-                    "icon": downloadURL.absoluteString
+                    "icon": relativePath
                 ]) { error in
                     if let error = error {
                         print("Error saving user data: \(error)")

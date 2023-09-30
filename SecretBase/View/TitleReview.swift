@@ -42,10 +42,11 @@ struct TitleReview: View {
                             .lineSpacing(8)
                         
                         HStack {
-//                            ForEach(likedUsers.prefix(5), id: \.id) { likedUser in
-//                                UserIcon(path: likedUser.icon)
-//                                    .frame(width: 30, height: 30)
-//                            }
+                            //なんで表示されないのー！後でまたやる
+                            ForEach(likedUsers, id: \.id) { likedUser in
+                                UserIcon(path: user.icon)
+                                    .frame(width: 30, height: 30)
+                            }
                             Spacer()
                             if user.id != authManager.currentUser?.uid {
                                 Image(systemName: "star.circle")

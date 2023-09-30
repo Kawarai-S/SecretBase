@@ -53,3 +53,9 @@ struct AdditionalInfoView: View {
     }
 }
 
+struct AdditionalInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        AdditionalInfoView()
+    }
+}
+
