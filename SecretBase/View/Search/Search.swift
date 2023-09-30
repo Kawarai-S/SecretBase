@@ -26,7 +26,9 @@ struct Search: View {
             return loader
         }
         let loader = TitleImageLoader()
-        imageLoaders[title.id] = loader
+        DispatchQueue.main.async {
+            self.imageLoaders[title.id] = loader
+        }
         return loader
     }
     
