@@ -32,6 +32,7 @@ struct SignInView: View {
                             .background(Color.white)
                             .foregroundColor(Color("MainColor"))
                             .fontWeight(.heavy)
+                            .font(.title2)
                             .cornerRadius(30)
                     }
                     .padding()
@@ -50,6 +51,7 @@ struct SignInView: View {
                             .background(Color.white)
                             .foregroundColor(Color("MainColor"))
                             .fontWeight(.heavy)
+                            .font(.title2)
                             .cornerRadius(30)
                     }
                     .padding()
