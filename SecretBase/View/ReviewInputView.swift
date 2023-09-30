@@ -11,8 +11,18 @@ struct ReviewInputView: View {
     @State private var reviewText: String = ""
     @State private var currentAlertType: ReviewAlertType?
     @Environment(\.presentationMode) var presentationMode
+    
     var itemId: String
     var isEditing: Bool
+    
+    init(itemId: String, isEditing: Bool, originalReview: String? = nil) {
+        self.itemId = itemId
+        self.isEditing = isEditing
+        if let original = originalReview {
+            _reviewText = State(initialValue: original)
+        }
+    }
+    
     
     var body: some View {
         VStack(spacing: 20) {
