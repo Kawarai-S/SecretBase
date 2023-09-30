@@ -75,7 +75,7 @@ struct SearchTitleView: View {
                     ForEach(viewModel.usersWithThisTitle.prefix(3), id: \.id) { user in
                         NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: userProfileModel)) {  // ← userProfileModelを渡す
                             HStack {
-                                UserIconSmall(user: user)
+                                UserIcon(path: user.icon)
                                     .frame(width: 32, height: 32)
                                 Text(user.name)
                             }

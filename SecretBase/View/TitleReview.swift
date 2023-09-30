@@ -12,6 +12,8 @@ struct TitleReview: View {
     var item: ShelfItem
     @ObservedObject var userProfileModel: UserProfileModel
     @ObservedObject private var authManager = FirebaseAuthStateManager.shared
+    //Favoしてくれた人
+    @State private var likedUsers: [AppUser] = []
     
     //レビュー編集モーダル表示フラグ
     @State private var showReviewModal: Bool = false
@@ -32,7 +34,7 @@ struct TitleReview: View {
                 if let review = item.review, !review.isEmpty {
                     VStack(alignment: .leading) {
                         HStack {
-                            UserIconSmall(user: user)
+                            UserIcon(path: user.icon)
                                 .frame(width: 50)
                             Text(user.name)
                         }
@@ -40,16 +42,18 @@ struct TitleReview: View {
                             .lineSpacing(8)
                         
                         HStack {
-                            ForEach(item.likedUsers(from: Array(users.values)), id: \.id) { likedUser in
-                                UserIconSmall(user: likedUser)
-                                    .frame(width: 30)
-                            }
+//                            ForEach(likedUsers.prefix(5), id: \.id) { likedUser in
+//                                UserIcon(path: likedUser.icon)
+//                                    .frame(width: 30, height: 30)
+//                            }
                             Spacer()
-                            Image(systemName: "star.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25)
-                                .foregroundColor(.gray)
+                            if user.id != authManager.currentUser?.uid {
+                                Image(systemName: "star.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 25)
+                                    .foregroundColor(.gray)
+                            }
                         }
                     }
                     .padding(.horizontal)
@@ -102,18 +106,14 @@ struct TitleReview: View {
         .sheet(isPresented: $showReviewModal) {
             ReviewInputView(itemId: self.item.itemId, isEditing: true, originalReview: item.review) // itemIdを渡す
         }
+        .onAppear {
+            userProfileModel.loadLikedUsers(for: item.likes ?? [])
+        }
     }
 }
 
 
-//extension ShelfItem {
-//    func likedUsers(from allUsers: [String: AppUser]) -> [AppUser] {
-//        return likes.compactMap { like in
-//            return allUsers[like.userId]
-//        }
-//    }
-//}
-//
+
 //struct TitleReview_Previews: PreviewProvider {
 //    static var previews: some View {
 //        // サンプルのShelfItemを取得。ここではusers["1001"]!の最初のShelfItemを使用しています。

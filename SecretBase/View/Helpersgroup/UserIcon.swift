@@ -12,6 +12,7 @@ struct UserIcon: View {
     var placeholder: Image
     
     init(path: String, placeholder: Image = Image(systemName: "photo")) {
+        print("Initializing UserIcon with path: \(path)")  // これを追加
         self.loader = UserIconLoader()
         self.placeholder = placeholder
         loader.load(from: path)

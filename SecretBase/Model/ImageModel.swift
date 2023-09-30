@@ -17,6 +17,9 @@ class UserIconLoader: ObservableObject {
                 print("Error getting download URL: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
+            
+            print("Download URL: \(url)")
+            
             self.loadImage(from: url)
         }
     }

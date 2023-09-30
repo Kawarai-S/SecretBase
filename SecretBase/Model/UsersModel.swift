@@ -13,6 +13,8 @@ import SwiftUI
 class UserProfileModel: ObservableObject {
     @Published var user: AppUser? = nil
     @Published var titleListModel = TitleListModel()
+    //ファボした人を読み込むための
+    @Published var likedUsers: [AppUser] = []
     
     init() {
         titleListModel.fetchData()  // データを取得します
@@ -104,6 +106,14 @@ class UserProfileModel: ObservableObject {
             completion(shelfItems)
         }
     }
+    //ファボした人を読み込む
+    func loadLikedUsers(for likes: [Like]) {
+        fetchLikedUsers(for: likes) { users in
+            print("Fetched liked users: \(users)")
+            self.likedUsers = users
+            print("Updated likedUsers: \(self.likedUsers)")
+        }
+    }
 }
 
 
@@ -117,6 +127,52 @@ extension ShelfItem {
         }
     }
 }
+
+//likedUserを取得
+extension UserProfileModel {
+    
+    func fetchLikedUsers(for likes: [Like], completion: @escaping ([AppUser]) -> Void) {
+        let firestore = Firestore.firestore()
+        let usersRef = firestore.collection("Users")
+        
+        let likedUserIds = likes.map { $0.userId }
+        
+        // likedUserIdsが空の場合は直ちに空の配列を返して終了
+        guard !likedUserIds.isEmpty else {
+            completion([])
+            return
+        }
+        
+        // バッチで複数のドキュメントを一度に取得
+        usersRef.whereField(FieldPath.documentID(), in: likedUserIds).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching liked users: \(error.localizedDescription)")
+                completion([])
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                print("Error fetching snapshot for liked users")
+                completion([])
+                return
+            }
+            
+            let likedUsers = snapshot.documents.compactMap { doc -> AppUser? in
+                let data = doc.data()
+                guard let name = data["name"] as? String,
+                      let icon = data["icon"] as? String,
+                      let profile = data["profile"] as? String else {
+                    return nil
+                }
+                return AppUser(id: doc.documentID, name: name, icon: icon, profile: profile, shelf: [])  // shelfは空で初期化
+            }
+            
+            completion(likedUsers)
+        }
+    }
+}
+
+
 
 //作品を棚に追加する
 func addShelfItem(item: ShelfItem, for userId: String, completion: @escaping (Bool) -> Void) {
