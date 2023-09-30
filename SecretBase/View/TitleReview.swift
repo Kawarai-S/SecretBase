@@ -10,7 +10,13 @@ import SwiftUI
 struct TitleReview: View {
     var user: AppUser
     var item: ShelfItem
-    @EnvironmentObject var userProfileModel: UserProfileModel  // ← 追加: UserProfileModelを参照
+    @ObservedObject var userProfileModel: UserProfileModel
+    @ObservedObject private var authManager = FirebaseAuthStateManager.shared
+    
+    //レビュー編集モーダル表示フラグ
+    @State private var showReviewModal: Bool = false
+    //レビュー削除用アラートフラグ
+    @State private var showAlert: Bool = false
     
     var titleForItem: Title? {
         return userProfileModel.titleListModel.titles.first { $0.id == item.itemId }  // ← titles の代わりに userProfileModel.titleListModel.titles を使用
@@ -47,9 +53,48 @@ struct TitleReview: View {
                     }
                     .padding(.horizontal)
                 }
+                //ログインユーザーのみ表示
+                if user.id == authManager.currentUser?.uid {
+                    //既存のレビューがある場合
+                    if !(item.review?.isEmpty ?? true) {
+                        HStack{
+                            Spacer()
+                            Button {
+                                self.showReviewModal = true
+                            } label: {
+                                Text("編集")
+                            }
+                            
+                            Button  {
+                                self.showAlert = true
+                            } label: {
+                                Text("削除")
+                            }
+                            .alert(isPresented: $showAlert) {
+                                Alert(title: Text("レビューを削除しますか？"),
+                                      message: Text("この操作は取り消せません。"),
+                                      primaryButton: .destructive(Text("削除"), action: {
+                                    // レビュー削除ロジック
+                                }),
+                                      secondaryButton: .cancel())
+                            }
+                        }
+                    } else {
+                        // レビューを書いていない場合
+                        Button {
+                            self.showReviewModal = true
+                        } label: {
+                            Text("レビューを書く")
+                        }
+                    }
+                }
+                
             } else {
                 Text("タイトルが見つかりません")
             }
+        }
+        .sheet(isPresented: $showReviewModal) {
+            ReviewInputView(itemId: self.item.itemId) // itemIdを渡す
         }
     }
 }

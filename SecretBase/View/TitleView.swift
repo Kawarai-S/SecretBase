@@ -19,7 +19,7 @@ struct TitleView: View {
                 ForEach(user.shelf, id: \.itemId) { item in
                     // itemIdに基づいてタイトルを取得します
                     if let title = userProfileModel.titleListModel.titles.first(where: { $0.id == item.itemId }) {
-                        NavigationLink(destination: TitleReview(user: user, item: item)) {
+                        NavigationLink(destination: TitleReview(user: user, item: item, userProfileModel: UserProfileModel())) {
                             SingleTitleImageView(title: title)
                         }
                     }
