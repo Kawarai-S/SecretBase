@@ -94,7 +94,7 @@ struct TitleReview: View {
             }
         }
         .sheet(isPresented: $showReviewModal) {
-            ReviewInputView(itemId: self.item.itemId) // itemIdを渡す
+            ReviewInputView(itemId: self.item.itemId, isEditing: true) // itemIdを渡す
         }
     }
 }

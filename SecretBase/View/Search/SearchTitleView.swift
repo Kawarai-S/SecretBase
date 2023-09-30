@@ -98,7 +98,7 @@ struct SearchTitleView: View {
             
         }
         NavigationLink(
-            destination: ReviewInputView(itemId: self.title.id),
+            destination: ReviewInputView(itemId: self.title.id, isEditing: false),
             isActive: $navigateToReviewInput
         ) {
             EmptyView()

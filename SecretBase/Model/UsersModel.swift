@@ -177,3 +177,39 @@ enum ReviewAlertType: Identifiable {
         }
     }
 }
+
+func updateReview(for itemId: String, reviewText: String, completion: @escaping (ReviewAlertType) -> Void) {
+    guard let currentUserId = Auth.auth().currentUser?.uid else {
+        completion(.error)
+        return
+    }
+    
+    let firestore = Firestore.firestore()
+    let shelfRef = firestore.collection("Users").document(currentUserId).collection("shelf")
+    
+    // itemIdを元にドキュメントを特定し、そのドキュメントのレビュー部分のみを更新します
+    shelfRef.whereField("itemid", isEqualTo: itemId).getDocuments { (snapshot, error) in
+        if let error = error {
+            print("Error getting document: \(error.localizedDescription)")
+            completion(.error)
+            return
+        }
+        
+        guard let document = snapshot?.documents.first else {
+            print("Document does not exist.")
+            completion(.error)
+            return
+        }
+        
+        document.reference.updateData(["review": reviewText]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.error)
+            } else {
+                completion(.success)
+            }
+        }
+    }
+}
+
+// レビューを編集・追記する

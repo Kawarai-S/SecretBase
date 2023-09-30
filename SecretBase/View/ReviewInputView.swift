@@ -12,10 +12,11 @@ struct ReviewInputView: View {
     @State private var currentAlertType: ReviewAlertType?
     @Environment(\.presentationMode) var presentationMode
     var itemId: String
+    var isEditing: Bool
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("レビューを入力してください")
+            Text(isEditing ? "レビューを追加・編集してください" : "レビューを入力してください")
                 .font(.headline)
             
             TextEditor(text: $reviewText)
@@ -24,16 +25,17 @@ struct ReviewInputView: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(8)
             Button(action: {
-                submitReview(for: self.itemId, reviewText: self.reviewText) { alertType in
-                    self.currentAlertType = alertType
-                    if alertType == .success {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
+                if isEditing {
+                    updateReview(for: self.itemId, reviewText: self.reviewText) { alertType in
+                        handleAlert(alertType)
+                    }
+                } else {
+                    submitReview(for: self.itemId, reviewText: self.reviewText) { alertType in
+                        handleAlert(alertType)
                     }
                 }
             }) {
-                Text("レビューを登録する")
+                Text(isEditing ? "レビューを追加・更新する" : "レビューを登録する")
                     .padding(.horizontal, 50)
                     .padding(.vertical, 10)
                     .background(Color.blue)
@@ -50,12 +52,23 @@ struct ReviewInputView: View {
             }
         }
     }
+    
+    private func handleAlert(_ alertType: ReviewAlertType) {
+        self.currentAlertType = alertType
+        if alertType == .success {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        }
+    }
 }
+
 
 
 
 struct ReviewInputView_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewInputView(itemId: "sampleItemId")
+        ReviewInputView(itemId: "sampleItemId", isEditing: true)
     }
 }
+
