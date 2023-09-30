@@ -9,21 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
-    @ObservedObject private var userProfileModel = UserProfileModel()  
+    @ObservedObject private var userProfileModel = UserProfileModel()
+    
+    //Shelfの「作品を追加する」ボタン用
+    @State private var selectedTab: Int = 0
 
     var body: some View {
         Group {
             if authStateManager.didSignInSuccessfully || authStateManager.signInState {
                 //メインコンテンツ
-                TabView {
+                TabView(selection: $selectedTab) {
                     NavigationView {
-                        Shelf()
+                        Shelf(selectedTab: $selectedTab)
                             .navigationBarHidden(true)
                     }
                     .background(Color.white.ignoresSafeArea()) // 背景色の設定
                     .tabItem {
                         Label("My Shelf", systemImage: "books.vertical")
                     }
+                    .tag(0)
                     
                     NavigationView {
                         Search()
@@ -33,6 +37,7 @@ struct ContentView: View {
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")
                     }
+                    .tag(1)
                     
                     NavigationView {
                         VStack {

@@ -12,12 +12,15 @@ struct Shelf: View {
     @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
     @State private var showProfileModal: Bool = false
     
+    //「作品を追加する」ボタンのタブ切り替え用
+    @Binding var selectedTab: Int
+    
     var body: some View {
         VStack {
             HStack {
                 
                 Button {
-                    // 作品を追加するアクション
+                    selectedTab = 1
                 } label: {
                     Image(systemName: "plus.square")
                     Text("作品を追加する")
