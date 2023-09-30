@@ -26,10 +26,9 @@ struct Shelf: View {
                     Text("作品を追加する")
                 }
                 
-                
-                
                 Spacer()
                 
+                // ユーザー情報
                 Button(action: {
                     showProfileModal = true
                 }) {
@@ -45,10 +44,6 @@ struct Shelf: View {
             .padding(.horizontal)
             
             TitleView(user: userProfileModel.user ?? .dummy, userProfileModel: userProfileModel)
-            // Profileモーダルの表示
-                .sheet(isPresented: $showProfileModal) {
-                    Profile(userId: authStateManager.currentUser?.uid ?? "")
-                }
         }
         .onAppear {
             if let currentUser = authStateManager.currentUser {
@@ -61,6 +56,10 @@ struct Shelf: View {
             } else {
                 print("No current user found in onAppear.")
             }
+        }
+        // Profileモーダルの表示
+        .sheet(isPresented: $showProfileModal) {
+            Profile(userId: authStateManager.currentUser?.uid ?? "")
         }
     }
 }

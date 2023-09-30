@@ -9,8 +9,9 @@ import SwiftUI
 
 struct OtherUserShelf: View {
     var userId: String
-//    @ObservedObject private var userProfileModel = UserProfileModel()
-    @ObservedObject var userProfileModel: UserProfileModel  // ← @ObservedObjectを保持し、初期化は行わない
+    // @ObservedObjectを保持し、初期化は行わない
+    @ObservedObject var userProfileModel: UserProfileModel
+    @State private var showProfileModal: Bool = false
     
     var body: some View {
         VStack {
@@ -25,7 +26,7 @@ struct OtherUserShelf: View {
                 Spacer()
                 
                 Button(action: {
-                    // Other user's profile modal
+                    showProfileModal = true
                 }) {
                     HStack {
                         Text(userProfileModel.user?.name ?? "Loading...")
@@ -40,6 +41,8 @@ struct OtherUserShelf: View {
             
             TitleView(user: userProfileModel.user ?? .dummy, userProfileModel: userProfileModel)
         }
+        
+        
         .onAppear {
             userProfileModel.fetchUserData(for: userId) {
                 // データが取得された後の処理
@@ -47,6 +50,9 @@ struct OtherUserShelf: View {
                     print("User's Shelf: \(user.shelf)")
                 }
             }
+        }
+        .sheet(isPresented: $showProfileModal) {
+            Profile(userId: userId) // userIdを渡す
         }
     }
 }
