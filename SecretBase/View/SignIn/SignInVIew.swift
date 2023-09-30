@@ -15,9 +15,13 @@ struct SignInView: View {
         NavigationStack{
             VStack{
                 Spacer()
+                
+                Image("favo")
+                    .resizable()
+                    .frame(width: 250, height: 250)
                 Text("My Favorite Things")
-                    .font(.title)
-                Spacer()
+                    .foregroundColor(.white)
+               
                 Group{
                     Button{
                         isSignIn = true
@@ -25,8 +29,9 @@ struct SignInView: View {
                         Text("Sign-In")
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
+                            .background(Color.white)
+                            .foregroundColor(Color("MainColor"))
+                            .fontWeight(.heavy)
                             .cornerRadius(30)
                     }
                     .padding()
@@ -42,8 +47,9 @@ struct SignInView: View {
                         Text("Sign-Up")
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
+                            .background(Color.white)
+                            .foregroundColor(Color("MainColor"))
+                            .fontWeight(.heavy)
                             .cornerRadius(30)
                     }
                     .padding()
@@ -52,7 +58,9 @@ struct SignInView: View {
                 .navigationDestination(isPresented: $isSignUp) {
                     SignUp()
                 }
+                Spacer()
             }
+            .background(Color("MainColor"))
         }
     }
 }
