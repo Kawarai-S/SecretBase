@@ -87,6 +87,7 @@
 		A5C520572AB5F05A0066A002 /* TitleReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleReview.swift; sourceTree = "<group>"; };
 		A5C5205C2AB60D650066A002 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		A5C520602AB7D4210066A002 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		A5CF14BC2AC868D80057FAC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5EBB9C92AC654C800653B94 /* ModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +135,7 @@
 		A54A42BC2AA7233700B3EDE0 /* SecretBase */ = {
 			isa = PBXGroup;
 			children = (
+				A5CF14BC2AC868D80057FAC7 /* Info.plist */,
 				A54A42BD2AA7233700B3EDE0 /* SecretBaseApp.swift */,
 				A54A42CB2AA7264700B3EDE0 /* View */,
 				A5C5204E2AB459E80066A002 /* Model */,
@@ -491,6 +493,8 @@
 				DEVELOPMENT_TEAM = 8KCL3237D2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SecretBase/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "ふぁぼ！";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -521,6 +525,8 @@
 				DEVELOPMENT_TEAM = 8KCL3237D2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SecretBase/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "ふぁぼ！";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
