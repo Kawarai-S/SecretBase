@@ -16,7 +16,8 @@ struct TitleReview: View {
     //レビュー編集モーダル表示フラグ
     @State private var showReviewModal: Bool = false
     //レビュー削除用アラートフラグ
-    @State private var showAlert: Bool = false
+    @State private var currentAlert: deleteAlertType?
+    
     
     var titleForItem: Title? {
         return userProfileModel.titleListModel.titles.first { $0.id == item.itemId }  // ← titles の代わりに userProfileModel.titleListModel.titles を使用
@@ -64,19 +65,25 @@ struct TitleReview: View {
                             } label: {
                                 Text("編集")
                             }
-                            
-                            Button  {
-                                self.showAlert = true
+                            Button {
+                                self.currentAlert = .confirmDelete
                             } label: {
                                 Text("削除")
                             }
-                            .alert(isPresented: $showAlert) {
-                                Alert(title: Text("レビューを削除しますか？"),
-                                      message: Text("この操作は取り消せません。"),
-                                      primaryButton: .destructive(Text("削除"), action: {
-                                    // レビュー削除ロジック
-                                }),
-                                      secondaryButton: .cancel())
+                            .alert(item: $currentAlert) { alertType in
+                                alertType.generateAlert(for: self.item.itemId) { success in
+                                    if success {
+                                        deleteReview(for: self.item.itemId) { success in
+                                            if success {
+                                                currentAlert = .deleteSuccess
+                                            } else {
+                                                currentAlert = .deleteError
+                                            }
+                                        }
+                                    } else {
+                                        currentAlert = .deleteError
+                                    }
+                                }
                             }
                         }
                     } else {
@@ -88,7 +95,6 @@ struct TitleReview: View {
                         }
                     }
                 }
-                
             } else {
                 Text("タイトルが見つかりません")
             }

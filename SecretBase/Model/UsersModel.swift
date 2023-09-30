@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import SwiftUI
 
 class UserProfileModel: ObservableObject {
     @Published var user: AppUser? = nil
@@ -178,6 +179,7 @@ enum ReviewAlertType: Identifiable {
     }
 }
 
+// レビューの追加・編集
 func updateReview(for itemId: String, reviewText: String, completion: @escaping (ReviewAlertType) -> Void) {
     guard let currentUserId = Auth.auth().currentUser?.uid else {
         completion(.error)
@@ -212,4 +214,70 @@ func updateReview(for itemId: String, reviewText: String, completion: @escaping 
     }
 }
 
-// レビューを編集・追記する
+// レビューの削除（フィールドを空にする）
+func deleteReview(for itemId: String, completion: @escaping (Bool) -> Void) {
+    guard let currentUserId = Auth.auth().currentUser?.uid else {
+        completion(false)
+        return
+    }
+    
+    let firestore = Firestore.firestore()
+    let shelfRef = firestore.collection("Users").document(currentUserId).collection("shelf")
+    
+    // itemIdを元にドキュメントを特定します
+    shelfRef.whereField("itemid", isEqualTo: itemId).getDocuments { (snapshot, error) in
+        if let error = error {
+            print("Error getting document: \(error.localizedDescription)")
+            completion(false)
+            return
+        }
+        
+        guard let document = snapshot?.documents.first else {
+            print("Document does not exist.")
+            completion(false)
+            return
+        }
+        
+        // ドキュメントのレビュー部分のみを空文字に更新します
+        document.reference.updateData(["review": ""]) { err in
+            if let err = err {
+                print("Error deleting review: \(err.localizedDescription)")
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+}
+
+
+enum deleteAlertType: Identifiable {
+    case confirmDelete, deleteSuccess, deleteError
+    
+    var id: Int {
+        switch self {
+        case .confirmDelete: return 1
+        case .deleteSuccess: return 2
+        case .deleteError: return 3
+        }
+    }
+}
+
+extension deleteAlertType {
+    func generateAlert(for itemId: String, with deleteAction: @escaping (Bool) -> Void) -> Alert {
+        switch self {
+        case .confirmDelete:
+            return Alert(title: Text("レビューを削除しますか？"),
+                         message: Text("この操作は取り消せません。"),
+                         primaryButton: .destructive(Text("削除"), action: {
+                deleteReview(for: itemId, completion: deleteAction)
+            }),
+                         secondaryButton: .cancel())
+        case .deleteSuccess:
+            return Alert(title: Text("成功"), message: Text("レビューの削除に成功しました。"), dismissButton: .default(Text("OK")))
+        case .deleteError:
+            return Alert(title: Text("エラー"), message: Text("レビューの削除に失敗しました。"), dismissButton: .default(Text("OK")))
+        }
+    }
+}
+

@@ -239,8 +239,8 @@
 				A56B63F82ABC773B004D24C6 /* TitleListModel.swift */,
 				A5675F1D2ABDD1F600B30F45 /* UsersModel.swift */,
 				A55F28A02ABEC327003368DC /* ImageModel.swift */,
-				A56367872AC19FE600B32E85 /* TitleSerchModel.swift */,
 				A56367892AC1E50700B32E85 /* GetUsersWithItem.swift */,
+				A56367872AC19FE600B32E85 /* TitleSerchModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

@@ -15,6 +15,7 @@ struct ReviewInputView: View {
     var itemId: String
     var isEditing: Bool
     
+    // 追加・編集時に元のレビュー内容をreviewTextに渡す
     init(itemId: String, isEditing: Bool, originalReview: String? = nil) {
         self.itemId = itemId
         self.isEditing = isEditing
