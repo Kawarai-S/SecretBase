@@ -13,7 +13,7 @@ struct UsersListView: View {
     var body: some View {
         List(users, id: \.id) { user in
             HStack{
-                UserIconSmall(user: user)
+                UserIcon(path: user.icon)
                     .frame(width: 32, height: 32)
                 Text(user.name)
             }

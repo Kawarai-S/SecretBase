@@ -64,6 +64,7 @@ class TitleImageLoader: ObservableObject {
     }
 }
 
+//アイコンのリサイズ
 func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
     let size = image.size
     let widthRatio  = targetSize.width  / size.width
@@ -85,6 +86,7 @@ func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
     return newImage
 }
 
+//プロフィール登録
 func uploadImage(selectedImage: UIImage?, name: String, profile: String, completion: @escaping (Bool) -> Void) {
     guard let resizedImage = resizeImage(image: selectedImage!, targetSize: CGSize(width: 250, height: 250)),
           let data = resizedImage.jpegData(compressionQuality: 0.5) else {
@@ -131,3 +133,66 @@ func uploadImage(selectedImage: UIImage?, name: String, profile: String, complet
         }
     }
 }
+
+//プロフィール編集
+func updateUserProfile(selectedImage: UIImage?, name: String, profile: String, completion: @escaping (Bool) -> Void) {
+    guard let currentUserId = Auth.auth().currentUser?.uid else {
+        completion(false)
+        return
+    }
+    
+    let firestore = Firestore.firestore()
+    let userDocument = firestore.collection("Users").document(currentUserId)
+    
+    userDocument.getDocument { document, error in
+        guard let document = document, document.exists, error == nil else {
+            print("Error fetching user data: \(error!)")
+            completion(false)
+            return
+        }
+        
+        if let selectedImage = selectedImage {
+            guard let resizedImage = resizeImage(image: selectedImage, targetSize: CGSize(width: 250, height: 250)),
+                  let data = resizedImage.jpegData(compressionQuality: 0.5) else {
+                completion(false)
+                return
+            }
+            
+            let previousIconPath = document.data()?["icon"] as? String ?? ""
+            let storageRef = Storage.storage().reference().child(previousIconPath)
+            
+            storageRef.putData(data, metadata: nil) { _, error in
+                guard error == nil else {
+                    print("Error uploading image: \(error!)")
+                    completion(false)
+                    return
+                }
+                
+                userDocument.updateData([
+                    "name": name,
+                    "profile": profile
+                ]) { error in
+                    if let error = error {
+                        print("Error updating user data: \(error)")
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
+                }
+            }
+        } else {
+            userDocument.updateData([
+                "name": name,
+                "profile": profile
+            ]) { error in
+                if let error = error {
+                    print("Error updating user data: \(error)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        }
+    }
+}
+
