@@ -28,75 +28,93 @@ struct TitleReview: View {
     var body: some View {
         ScrollView {
             if let title = titleForItem {
-                TitleDetail(title: title)
-                    .padding()
-                
-                if let review = item.review, !review.isEmpty {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            UserIcon(path: user.icon)
-                                .frame(width: 50)
-                            Text(user.name)
-                        }
-                        Text(review)
-                            .lineSpacing(8)
-                        
-                        HStack {
-                            //なんで表示されないのー！後でまたやる
-                            ForEach(likedUsers, id: \.id) { likedUser in
+                VStack(alignment: .leading){
+                    TitleDetail(title: title)
+                    
+                    if let review = item.review, !review.isEmpty {
+                        VStack(alignment: .leading) {
+                            HStack {
                                 UserIcon(path: user.icon)
-                                    .frame(width: 30, height: 30)
+                                    .frame(width: 50)
+                                Text(user.name)
                             }
-                            Spacer()
-                            if user.id != authManager.currentUser?.uid {
-                                Image(systemName: "star.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 25)
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                //ログインユーザーのみ表示
-                if user.id == authManager.currentUser?.uid {
-                    //既存のレビューがある場合
-                    if !(item.review?.isEmpty ?? true) {
-                        HStack{
-                            Spacer()
-                            Button {
-                                self.showReviewModal = true
-                            } label: {
-                                Text("編集")
-                            }
-                            Button {
-                                self.currentAlert = .confirmDelete
-                            } label: {
-                                Text("削除")
-                            }
-                            .alert(item: $currentAlert) { alertType in
-                                alertType.generateAlert(for: self.item.itemId) { success in
-                                    if success {
-                                        deleteReview(for: self.item.itemId) { success in
-                                            if success {
-                                                currentAlert = .deleteSuccess
-                                            } else {
-                                                currentAlert = .deleteError
-                                            }
-                                        }
-                                    } else {
-                                        currentAlert = .deleteError
-                                    }
+                            Text(review)
+                                .lineSpacing(8)
+                            
+                            HStack {
+                                //なんで表示されないのー！後でまたやる
+                                ForEach(likedUsers, id: \.id) { likedUser in
+                                    UserIcon(path: user.icon)
+                                        .frame(width: 30, height: 30)
+                                }
+                                Spacer()
+                                if user.id != authManager.currentUser?.uid {
+                                    Image(systemName: "star.circle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 25)
+                                        .foregroundColor(.gray)
                                 }
                             }
                         }
-                    } else {
-                        // レビューを書いていない場合
-                        Button {
-                            self.showReviewModal = true
-                        } label: {
-                            Text("レビューを書く")
+                        .padding(.horizontal)
+                    }
+                    //ログインユーザーのみ表示
+                    if user.id == authManager.currentUser?.uid {
+                        //既存のレビューがある場合
+                        if !(item.review?.isEmpty ?? true) {
+                            HStack{
+                                Spacer()
+                                Button {
+                                    self.showReviewModal = true
+                                } label: {
+                                    Text("編集")
+                                        .frame(maxWidth: 50)
+                                        .padding(10)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
+                                }
+                                Button {
+                                    self.currentAlert = .confirmDelete
+                                } label: {
+                                    Text("削除")
+                                        .frame(maxWidth: 50)
+                                        .padding(10)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
+                                }
+                                .alert(item: $currentAlert) { alertType in
+                                    alertType.generateAlert(for: self.item.itemId) { success in
+                                        if success {
+                                            deleteReview(for: self.item.itemId) { success in
+                                                if success {
+                                                    currentAlert = .deleteSuccess
+                                                } else {
+                                                    currentAlert = .deleteError
+                                                }
+                                            }
+                                        } else {
+                                            currentAlert = .deleteError
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        } else {
+                            // レビューを書いていない場合
+                            Button {
+                                self.showReviewModal = true
+                            } label: {
+                                HStack{
+                                    Image(systemName: "pencil.line")
+                                    Text("レビューを書く")
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
+                            }
+                            .padding(.horizontal)
                         }
                     }
                 }

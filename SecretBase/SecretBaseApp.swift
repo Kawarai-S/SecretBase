@@ -39,6 +39,7 @@ struct SecretBaseApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .accentColor(Color("MainColor2")) 
         }
     }
 }
