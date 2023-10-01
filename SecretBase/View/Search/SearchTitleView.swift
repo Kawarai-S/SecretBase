@@ -47,7 +47,7 @@ struct SearchTitleView: View {
                     .frame(maxWidth: .infinity)
                     .padding()
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.blue, lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
                     .actionSheet(isPresented: $showingActionSheet) {
                         ActionSheet(title: Text("選択してください"), buttons: [
                             .default(Text("登録する")) {
@@ -71,6 +71,13 @@ struct SearchTitleView: View {
                     }
                     //作品を棚に登録している人を表示
                     Text("この作品を好きな人")
+//                        .padding(10)
+//                        .frame(maxWidth: .infinity)
+//                        .background(Color("MainColor"))
+//                        .foregroundColor(Color.white)
+//                        .fontWeight(.heavy)
+//                        .font(.subheadline)
+//                        .cornerRadius(30)
                         .padding(.top)
                     ForEach(viewModel.usersWithThisTitle.prefix(3), id: \.id) { user in
                         NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: userProfileModel)) {  // ← userProfileModelを渡す
