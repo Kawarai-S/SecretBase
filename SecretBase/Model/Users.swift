@@ -13,6 +13,7 @@ public struct AppUser: Codable {
     let icon: String
     let profile: String
     let shelf: [ShelfItem]
+    let favorites: [String]
 }
 
 public struct ShelfItem: Codable {
@@ -32,7 +33,8 @@ extension AppUser {
             name: "ダミーユーザー",
             icon: "dummyIconPath",
             profile: "",
-            shelf: []
+            shelf: [],
+            favorites: []
         )
     }
 }

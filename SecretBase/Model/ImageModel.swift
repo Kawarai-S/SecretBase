@@ -118,7 +118,8 @@ func uploadImage(selectedImage: UIImage?, name: String, profile: String, complet
                 firestore.collection("Users").document(currentUserId).setData([
                     "name": name,
                     "profile": profile,
-                    "icon": relativePath
+                    "icon": relativePath,
+                    "favorites": []  // <-- ここでfavoritesフィールドを空の配列として初期化
                 ]) { error in
                     if let error = error {
                         print("Error saving user data: \(error)")

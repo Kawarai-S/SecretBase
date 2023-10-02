@@ -54,8 +54,9 @@ func getUsersWithItem(itemId: String, completion: @escaping ([AppUser]) -> Void)
                     group.leave()
                     return
                 }
+                    let userFavorites = userData["favorites"] as? [String] ?? []
                 
-                let user = AppUser(id: userId, name: name, icon: icon, profile: profile, shelf: [])
+                let user = AppUser(id: userId, name: name, icon: icon, profile: profile, shelf: [], favorites: userFavorites)
                 usersWithItem.append(user)
                 group.leave()
             }
@@ -97,8 +98,9 @@ class SearchTitleViewModel: ObservableObject {
             let userName = userData["name"] as? String ?? ""
             let userIcon = userData["icon"] as? String ?? ""
             let userProfile = userData["profile"] as? String ?? ""
-            let user = AppUser(id: userId, name: userName, icon: userIcon, profile: userProfile, shelf: [])
-            
+            let userFavorites = userData["favorites"] as? [String] ?? []
+            let user = AppUser(id: userId, name: userName, icon: userIcon, profile: userProfile, shelf: [], favorites: userFavorites)
+
             completion(user)
         }
     }

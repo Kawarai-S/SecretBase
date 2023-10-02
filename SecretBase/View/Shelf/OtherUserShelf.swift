@@ -17,7 +17,13 @@ struct OtherUserShelf: View {
         VStack {
             HStack {
                 Button {
-                    // お気に入りに登録するアクション
+                    userProfileModel.addFavorite(userId: userId) { success in
+                        if success {
+                            print("Successfully added to favorites!")
+                        } else {
+                            print("Error adding to favorites.")
+                        }
+                    }
                 } label: {
                     Image(systemName: "bookmark.fill")
                     Text("お気に入りに登録する")

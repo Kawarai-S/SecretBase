@@ -90,7 +90,7 @@ struct ProfileEditor: View {
 
 struct ProfileEditor_Previews: PreviewProvider {
     static var previews: some View {
-        let dummyUser = AppUser(id: "123", name: "Sample User", icon: "sampleIconURL", profile: "Sample Profile", shelf: [])
+        let dummyUser = AppUser(id: "123", name: "Sample User", icon: "sampleIconURL", profile: "Sample Profile", shelf: [], favorites: [])
         
         ProfileEditor(user: dummyUser)
     }

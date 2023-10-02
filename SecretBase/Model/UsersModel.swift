@@ -47,11 +47,12 @@ class UserProfileModel: ObservableObject {
             let userName = userData["name"] as? String ?? ""
             let userIcon = userData["icon"] as? String ?? ""
             let userProfile = userData["profile"] as? String ?? ""
+            let userFavorites = userData["favorites"] as? [String] ?? []  // この行を追加
             
             self.fetchShelf(for: targetUserId) { shelfItems in
-                let user = AppUser(id: targetUserId, name: userName, icon: userIcon, profile: userProfile, shelf: shelfItems ?? [])
+                let user = AppUser(id: targetUserId, name: userName, icon: userIcon, profile: userProfile, shelf: shelfItems ?? [], favorites: userFavorites) // favoritesを追加
                 self.user = user
-                completion?() 
+                completion?()
             }
         }
     }
@@ -106,6 +107,29 @@ class UserProfileModel: ObservableObject {
             completion(shelfItems)
         }
     }
+    
+    //棚をお気に入りに追加
+    func addFavorite(userId: String, completion: @escaping (Bool) -> Void) {
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+        
+        let firestore = Firestore.firestore()
+        let userRef = firestore.collection("Users").document(currentUserID)
+        
+        userRef.updateData([
+            "favorites": FieldValue.arrayUnion([userId])
+        ]) { error in
+            if let error = error {
+                print("Error adding favorite: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+    
     //ファボした人を読み込む
     func loadLikedUsers(for likes: [Like]) {
         fetchLikedUsers(for: likes) { users in
@@ -163,8 +187,9 @@ extension UserProfileModel {
                       let icon = data["icon"] as? String,
                       let profile = data["profile"] as? String else {
                     return nil
-                }
-                return AppUser(id: doc.documentID, name: name, icon: icon, profile: profile, shelf: [])  // shelfは空で初期化
+                    }
+                      let userFavorites = data["favorites"] as? [String] ?? []
+                return AppUser(id: doc.documentID, name: name, icon: icon, profile: profile, shelf: [], favorites: userFavorites)  // shelfは空で初期化
             }
             
             completion(likedUsers)
