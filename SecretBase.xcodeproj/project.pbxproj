@@ -46,7 +46,6 @@
 		A5C520582AB5F05A0066A002 /* TitleReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C520572AB5F05A0066A002 /* TitleReview.swift */; };
 		A5C5205D2AB60D650066A002 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C5205C2AB60D650066A002 /* Users.swift */; };
 		A5C520612AB7D4210066A002 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C520602AB7D4210066A002 /* TitleView.swift */; };
-		A5EBB9CA2AC654C800653B94 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EBB9C92AC654C800653B94 /* ModelData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,7 +85,6 @@
 		A5C5205C2AB60D650066A002 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		A5C520602AB7D4210066A002 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A5CF14BC2AC868D80057FAC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		A5EBB9C92AC654C800653B94 /* ModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,12 +103,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A516E2162AC5191400CA5B92 /* OtherUserShelf */ = {
+		A516E2162AC5191400CA5B92 /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
+				A54A42CC2AA7267400B3EDE0 /* Shelf.swift */,
 				A516F1D72AC27B0900D7E06D /* OtherUserShelf.swift */,
+				A5C520602AB7D4210066A002 /* TitleView.swift */,
+				A5C520572AB5F05A0066A002 /* TitleReview.swift */,
+				A5643A552ABACF7E00EF4F62 /* UsersListView.swift */,
+				A516F1D92AC2A20F00D7E06D /* ReviewInputView.swift */,
 			);
-			path = OtherUserShelf;
+			path = Shelf;
 			sourceTree = "<group>";
 		};
 		A54A42B12AA7233700B3EDE0 = {
@@ -133,11 +136,11 @@
 		A54A42BC2AA7233700B3EDE0 /* SecretBase */ = {
 			isa = PBXGroup;
 			children = (
-				A5CF14BC2AC868D80057FAC7 /* Info.plist */,
 				A54A42BD2AA7233700B3EDE0 /* SecretBaseApp.swift */,
 				A54A42CB2AA7264700B3EDE0 /* View */,
 				A5C5204E2AB459E80066A002 /* Model */,
 				A56F4A262ABFF50E003C26B3 /* GoogleService-Info.plist */,
+				A5CF14BC2AC868D80057FAC7 /* Info.plist */,
 				A5C520452AB42B6B0066A002 /* Resources */,
 				A54A42C12AA7233800B3EDE0 /* Assets.xcassets */,
 				A54A42C32AA7233800B3EDE0 /* Preview Content */,
@@ -157,13 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				A54A42BF2AA7233700B3EDE0 /* ContentView.swift */,
-				A54A42CC2AA7267400B3EDE0 /* Shelf.swift */,
-				A5C5204A2AB456B30066A002 /* TitleDetail.swift */,
-				A5C520602AB7D4210066A002 /* TitleView.swift */,
-				A5C520572AB5F05A0066A002 /* TitleReview.swift */,
-				A516E2162AC5191400CA5B92 /* OtherUserShelf */,
-				A5643A552ABACF7E00EF4F62 /* UsersListView.swift */,
-				A516F1D92AC2A20F00D7E06D /* ReviewInputView.swift */,
+				A516E2162AC5191400CA5B92 /* Shelf */,
 				A5675F182ABD8AAE00B30F45 /* Search */,
 				A55F289E2ABE9F8E003368DC /* SignIn */,
 				A55F289F2ABE9FA9003368DC /* Profile */,
@@ -195,6 +192,7 @@
 		A5675F172ABD8A5A00B30F45 /* Helpersgroup */ = {
 			isa = PBXGroup;
 			children = (
+				A5C5204A2AB456B30066A002 /* TitleDetail.swift */,
 				A5C520552AB5EA3A0066A002 /* TitleImage.swift */,
 				A55F28A22ABEC374003368DC /* UserIcon.swift */,
 				A56367852AC15C4C00B32E85 /* SingleTitleImageView.swift */,
@@ -230,7 +228,6 @@
 		A5C5204E2AB459E80066A002 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A5EBB9C92AC654C800653B94 /* ModelData.swift */,
 				A5C5204F2AB45A140066A002 /* Titles.swift */,
 				A5C5205C2AB60D650066A002 /* Users.swift */,
 				A56B63F42ABC098E004D24C6 /* AuthManager.swift */,
@@ -347,7 +344,6 @@
 				A56B63F52ABC098E004D24C6 /* AuthManager.swift in Sources */,
 				A59407AE2AC3F2D8001CB01E /* AdditionalInfoView.swift in Sources */,
 				A516F1DA2AC2A20F00D7E06D /* ReviewInputView.swift in Sources */,
-				A5EBB9CA2AC654C800653B94 /* ModelData.swift in Sources */,
 				A59407AA2AC3CF6B001CB01E /* SignUp.swift in Sources */,
 				A54A42BE2AA7233700B3EDE0 /* SecretBaseApp.swift in Sources */,
 				A59407AC2AC3F1B0001CB01E /* ImagePicker.swift in Sources */,
