@@ -13,11 +13,11 @@ import SwiftUI
 class UserProfileModel: ObservableObject {
     @Published var user: AppUser? = nil
     @Published var titleListModel = TitleListModel()
-    //ファボした人を読み込むための
+    //ファボした人を読み込むための配列
     @Published var likedUsers: [AppUser] = []
     
     init() {
-        titleListModel.fetchData()  // データを取得します
+        titleListModel.fetchData()  // データを取得
     }
     
     
@@ -105,28 +105,6 @@ class UserProfileModel: ObservableObject {
             // completionが呼び出される前のshelfItemsの状態を出力
             print("Completion called with \(shelfItems.count) items.")
             completion(shelfItems)
-        }
-    }
-    
-    //棚をお気に入りに追加
-    func addFavorite(userId: String, completion: @escaping (Bool) -> Void) {
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            completion(false)
-            return
-        }
-        
-        let firestore = Firestore.firestore()
-        let userRef = firestore.collection("Users").document(currentUserID)
-        
-        userRef.updateData([
-            "favorites": FieldValue.arrayUnion([userId])
-        ]) { error in
-            if let error = error {
-                print("Error adding favorite: \(error.localizedDescription)")
-                completion(false)
-            } else {
-                completion(true)
-            }
         }
     }
     

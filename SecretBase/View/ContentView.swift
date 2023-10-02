@@ -56,7 +56,7 @@ struct ContentView: View {
                     }
                     
                     NavigationView {
-                        Text("自分のお気に入りレビューとか")
+                        BookmarkView()
                             .navigationBarHidden(true)
                     }
                     .background(Color.white.ignoresSafeArea())

@@ -11,13 +11,14 @@ struct OtherUserShelf: View {
     var userId: String
     // @ObservedObjectを保持し、初期化は行わない
     @ObservedObject var userProfileModel: UserProfileModel
+    @ObservedObject var bookmarkedUsersModel: BookmarkedUsersModel
     @State private var showProfileModal: Bool = false
     
     var body: some View {
         VStack {
             HStack {
                 Button {
-                    userProfileModel.addFavorite(userId: userId) { success in
+                    bookmarkedUsersModel.addFavorite(userId: userId) { success in
                         if success {
                             print("Successfully added to favorites!")
                         } else {

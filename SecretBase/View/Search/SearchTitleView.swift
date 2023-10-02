@@ -82,7 +82,7 @@ struct SearchTitleView: View {
                     .fontWeight(.regular)
                     .font(.headline)
                     ForEach(viewModel.usersWithThisTitle.prefix(3), id: \.id) { user in
-                        NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: userProfileModel)) {  // ← userProfileModelを渡す
+                        NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: userProfileModel, bookmarkedUsersModel: BookmarkedUsersModel())) {  // ← userProfileModelを渡す
                             HStack {
                                 UserIcon(path: user.icon)
                                     .frame(width: 32, height: 32)
