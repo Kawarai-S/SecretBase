@@ -90,7 +90,7 @@ struct SearchTitleView: View {
                             }
                         }
                     }
-                    NavigationLink(destination: UsersListView(users: viewModel.usersWithThisTitle)) {
+                    NavigationLink(destination: UsersListView(users: viewModel.usersWithThisTitle, userProfileModel: userProfileModel, bookmarkedUsersModel: BookmarkedUsersModel())) {
                         HStack {
                             Spacer()
                             HStack{
