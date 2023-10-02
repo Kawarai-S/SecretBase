@@ -35,22 +35,33 @@ struct ProfileEditor: View {
                 UserIcon(path: user.icon)
                     .frame(width: 100, height: 100)
             }
-            Button("Pick Image") {
+            Button {
                 isImagePickerPresented = true
+            } label: {
+                Image(systemName: "photo.circle.fill")
+                Text("アイコン変更")
             }
+            .modifier(OverlayButtonModifier(maxWidth: 150, paddingValue: 8))
+            .foregroundColor(Color("MainColor2"))
+            .padding()
             
             // ユーザー名の編集
             TextField("Name", text: $updatedName)
                 .padding()
-                .border(Color.gray)
+                .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
+                .cornerRadius(5.0)
+            
             
             // プロフィール文の編集
-            TextField("Profile", text: $updatedProfile)
+            TextEditor(text: $updatedProfile)
                 .padding()
-                .border(Color.gray)
-            
+                .overlay(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
+                .cornerRadius(5.0)
+                .frame(height: 200)
             // 更新ボタン
-            Button("Update Profile") {
+            Button {
                 updateUserProfile(selectedImage: selectedImage, name: updatedName, profile: updatedProfile) { success in
                     if success {
                         alertMessage = "Profile updated successfully!"
@@ -59,7 +70,11 @@ struct ProfileEditor: View {
                     }
                     showAlert = true
                 }
+            } label: {
+                Text("プロフィール更新")
             }
+            .modifier(MainButtonModifier())
+            .padding(.top)
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Profile Update"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }

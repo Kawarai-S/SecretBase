@@ -10,12 +10,12 @@ import Firebase
 
 struct AdditionalInfoView: View {
     @State private var name: String = ""
-    @State private var profile: String = ""
+    @State private var profile: String = "Enter your profile here..."
     @State private var isImagePickerPresented: Bool = false
     @State private var selectedImage: UIImage?
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             if let image = selectedImage {
                 Image(uiImage: image)
                     .resizable()
@@ -24,17 +24,33 @@ struct AdditionalInfoView: View {
                     .clipShape(Circle())
             }
             
-            Button("Pick Image") {
+            Button {
                 isImagePickerPresented = true
+            } label: {
+                Image(systemName: "photo.circle.fill")
+                Text("アイコンを設定")
             }
+            .modifier(OverlayButtonModifier(maxWidth: 150, paddingValue: 8))
+            .foregroundColor(Color("MainColor2"))
+            .padding()
             
             TextField("Name", text: $name)
                 .padding()
-                .border(Color.gray)
+                .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
+                .cornerRadius(5.0)
             
-            TextField("Profile", text: $profile)
+            TextEditor(text: $profile)
                 .padding()
-                .border(Color.gray)
+                .overlay(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
+                .cornerRadius(5.0)
+                .frame(height: 200)
+                .onTapGesture {
+                    if profile == "Enter your profile here..." {
+                        profile = "" // タップ時に初期値をクリア
+                    }
+                }
             
             Button("Complete Sign Up") {
                 uploadImage(selectedImage: selectedImage, name: name, profile: profile) { success in
@@ -45,6 +61,7 @@ struct AdditionalInfoView: View {
                     }
                 }
             }
+            .modifier(MainButtonModifier())
         }
         .padding()
         .sheet(isPresented: $isImagePickerPresented, content: {

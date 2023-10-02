@@ -25,11 +25,7 @@ struct Shelf: View {
                     Image(systemName: "plus.square")
                     Text("作品を追加する")
                 }
-                .frame(maxWidth: 200)
-                .padding(8)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
-                
+                .modifier(OverlayButtonModifier(maxWidth: 200, paddingValue: 8))
                 Spacer()
                 
                 // ユーザー情報

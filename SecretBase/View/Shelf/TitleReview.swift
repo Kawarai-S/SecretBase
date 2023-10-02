@@ -69,19 +69,13 @@ struct TitleReview: View {
                                     self.showReviewModal = true
                                 } label: {
                                     Text("編集")
-                                        .frame(maxWidth: 50)
-                                        .padding(10)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
+                                        .modifier(OverlayButtonModifier(maxWidth: 50))
                                 }
                                 Button {
                                     self.currentAlert = .confirmDelete
                                 } label: {
                                     Text("削除")
-                                        .frame(maxWidth: 50)
-                                        .padding(10)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
+                                        .modifier(OverlayButtonModifier(maxWidth: 50))
                                 }
                                 .alert(item: $currentAlert) { alertType in
                                     alertType.generateAlert(for: self.item.itemId) { success in
@@ -109,10 +103,7 @@ struct TitleReview: View {
                                     Image(systemName: "pencil.line")
                                     Text("レビューを書く")
                                 }
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
+                                .modifier(MainButtonModifier())
                             }
                             .padding(.horizontal)
                         }

@@ -21,12 +21,14 @@ struct SignIn: View {
         VStack(spacing: 20) {
             TextField("Email", text: $email)
                 .padding()
-                .background(Color.gray.opacity(0.2))
+                .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
                 .cornerRadius(5.0)
             
             SecureField("Password", text: $password)
                 .padding()
-                .background(Color.gray.opacity(0.2))
+                .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
                 .cornerRadius(5.0)
             
             Button("Sign In") {
@@ -40,10 +42,7 @@ struct SignIn: View {
                     }
                 }
             }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(5.0)
+            .modifier(MainButtonModifier())
         }
         .padding()
         .alert(isPresented: $showAlert) {

@@ -16,14 +16,18 @@ struct SignUp: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 20) {
                 TextField("Email", text: $email)
                     .padding()
-                    .border(Color.gray)
+                    .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                    .background(Color.white)
+                    .cornerRadius(5.0)
                 
                 SecureField("Password", text: $password)
                     .padding()
-                    .border(Color.gray)
+                    .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                    .background(Color.white)
+                    .cornerRadius(5.0)
                 
                 Button("Sign Up") {
                     FirebaseAuthStateManager.shared.signUp(withEmail: email, password: password) { success, error in
@@ -35,6 +39,7 @@ struct SignUp: View {
                         }
                     }
                 }
+                .modifier(MainButtonModifier())
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
                 }

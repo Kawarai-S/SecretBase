@@ -44,10 +44,13 @@ struct SearchTitleView: View {
                             Spacer()
                         }
                     }
-                    .frame(maxWidth: .infinity)
                     .padding()
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("MainColor2"), lineWidth: 1))
+                    .frame(maxWidth: .infinity)
+                    .background(Color("MainColor"))
+                    .foregroundColor(Color.white)
+                    .fontWeight(.medium)
+                    .font(.headline)
+                    .cornerRadius(30)
                     .actionSheet(isPresented: $showingActionSheet) {
                         ActionSheet(title: Text("選択してください"), buttons: [
                             .default(Text("登録する")) {
@@ -70,15 +73,14 @@ struct SearchTitleView: View {
                         ])
                     }
                     //作品を棚に登録している人を表示
-                    Text("この作品を好きな人")
-//                        .padding(10)
-//                        .frame(maxWidth: .infinity)
-//                        .background(Color("MainColor"))
-//                        .foregroundColor(Color.white)
-//                        .fontWeight(.heavy)
-//                        .font(.subheadline)
-//                        .cornerRadius(30)
-                        .padding(.top)
+                    HStack {
+                        Image(systemName: "star.circle.fill")
+                            .foregroundColor(Color("SubColor2"))
+                        Text("この作品を好きな人")
+                    }
+                    .padding(.top)
+                    .fontWeight(.regular)
+                    .font(.headline)
                     ForEach(viewModel.usersWithThisTitle.prefix(3), id: \.id) { user in
                         NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: userProfileModel)) {  // ← userProfileModelを渡す
                             HStack {
@@ -91,12 +93,23 @@ struct SearchTitleView: View {
                     NavigationLink(destination: UsersListView(users: viewModel.usersWithThisTitle)) {
                         HStack {
                             Spacer()
-                            Text("もっとみる")
+                            HStack{
+                                Image(systemName: "ellipsis.circle.fill")
+                                Text("もっとみる")
+                            }
+                            .frame(maxWidth: 120)
+                            .padding(5)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                            .overlay(RoundedRectangle(cornerRadius: 30).stroke(Color("MainColor2"), lineWidth: 1))
+                            .fontWeight(.regular)
+                            .font(.headline)
                         }
+                        
+                        
                     }
                     
                 }
-                .padding()
+                .padding(.horizontal)
             }
             .onAppear {
                 viewModel.fetchUsersWithItem()
@@ -117,13 +130,13 @@ struct SearchTitleView: View {
 }
 
 
-struct SearchTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        if let sampleTitle = titles["013"] {
-            SearchTitleView(title: sampleTitle)
-        } else {
-            Text("Sample title not found.")
-        }
-    }
-}
+//struct SearchTitleView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        if let sampleTitle = titles["013"] {
+//            SearchTitleView(title: sampleTitle)
+//        } else {
+//            Text("Sample title not found.")
+//        }
+//    }
+//}
 

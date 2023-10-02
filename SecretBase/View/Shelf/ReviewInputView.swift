@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReviewInputView: View {
-    @State private var reviewText: String = ""
+    @State private var reviewText: String = "ここにレビューを書いてください。"
     @State private var currentAlertType: ReviewAlertType?
     @Environment(\.presentationMode) var presentationMode
     
@@ -27,14 +27,20 @@ struct ReviewInputView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(isEditing ? "レビューを追加・編集してください" : "レビューを入力してください")
-                .font(.headline)
             
             TextEditor(text: $reviewText)
-                .frame(height: 200)
                 .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
+                .overlay(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
+                .cornerRadius(5.0)
+                .frame(height: 200)
+                .onTapGesture {
+                    if reviewText == "ここにレビューを書いてください。" {
+                        reviewText = "" // タップ時に初期値をクリア
+                    }
+                }
+                .padding(.horizontal)
+            
             Button(action: {
                 if isEditing {
                     updateReview(for: self.itemId, reviewText: self.reviewText) { alertType in
@@ -47,11 +53,9 @@ struct ReviewInputView: View {
                 }
             }) {
                 Text(isEditing ? "レビューを追加・更新する" : "レビューを登録する")
-                    .padding(.horizontal, 50)
-                    .padding(.vertical, 10)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .modifier(MainButtonModifier())
+                    .padding()
+                    
             }
             .alert(item: $currentAlertType) { alertType in
                 switch alertType {
