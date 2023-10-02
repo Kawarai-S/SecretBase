@@ -104,33 +104,25 @@ func uploadImage(selectedImage: UIImage?, name: String, profile: String, complet
             return
         }
         
-        storageRef.downloadURL { url, error in
-            guard let downloadURL = url else {
-                print("Error getting download URL: \(error!)")
-                completion(false)
-                return
-            }
-            
-            let relativePath = "UserIcon/" + fileName
-            
-            let firestore = Firestore.firestore()
-            if let currentUserId = Auth.auth().currentUser?.uid {
-                firestore.collection("Users").document(currentUserId).setData([
-                    "name": name,
-                    "profile": profile,
-                    "icon": relativePath,
-                    "favorites": []  // <-- ここでfavoritesフィールドを空の配列として初期化
-                ]) { error in
-                    if let error = error {
-                        print("Error saving user data: \(error)")
-                        completion(false)
-                    } else {
-                        completion(true)
-                    }
+        let relativePath = "UserIcon/" + fileName
+        
+        let firestore = Firestore.firestore()
+        if let currentUserId = Auth.auth().currentUser?.uid {
+            firestore.collection("Users").document(currentUserId).setData([
+                "name": name,
+                "profile": profile,
+                "icon": relativePath,
+                "favorites": [String]()   // <-- ここでfavoritesフィールドを空の配列として初期化
+            ]) { error in
+                if let error = error {
+                    print("Error saving user data: \(error)")
+                    completion(false)
+                } else {
+                    completion(true)
                 }
-            } else {
-                completion(false)
             }
+        } else {
+            completion(false)
         }
     }
 }
