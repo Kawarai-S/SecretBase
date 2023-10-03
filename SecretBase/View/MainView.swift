@@ -6,46 +6,62 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct MainView: View {
+    @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
+    @ObservedObject private var userProfileModel = UserProfileModel()
+    @State private var selectedTab: Int = 0
+    
     var body: some View {
-        TabView {
+        //メインコンテンツ
+        TabView(selection: $selectedTab) {
             NavigationView {
-                Shelf()
+                Shelf(selectedTab: $selectedTab)
                     .navigationBarHidden(true)
             }
             .background(Color.white.ignoresSafeArea()) // 背景色の設定
             .tabItem {
                 Label("My Shelf", systemImage: "books.vertical")
             }
+            .tag(0)
             
             NavigationView {
-                Serch()
+                Search()
                     .navigationBarHidden(true)
             }
-            .background(Color.white.ignoresSafeArea()) // 背景色の設定
+            .background(Color.white.ignoresSafeArea())
             .tabItem {
-                Label("Serch", systemImage: "magnifyingglass")
+                Label("Search", systemImage: "magnifyingglass")
             }
+            .tag(1)
             
             NavigationView {
-                Text("通知とか")
-                    .navigationBarHidden(true)
+                VStack {
+                    Text("通知とか")
+                    Button {
+                        authStateManager.signOut()
+                    } label: {
+                        Text("SignOut")
+                    }
+                }
+                .navigationBarHidden(true)
             }
-            .background(Color.white.ignoresSafeArea()) // 背景色の設定
+            .background(Color.white.ignoresSafeArea())
             .tabItem {
                 Label("Notification", systemImage: "bell.fill")
             }
             
             NavigationView {
-                Text("自分のお気に入りレビューとか")
+                BookmarkView()
                     .navigationBarHidden(true)
             }
-            .background(Color.white.ignoresSafeArea()) // 背景色の設定
+            .background(Color.white.ignoresSafeArea())
             .tabItem {
                 Label("Bookmark", systemImage: "bookmark.fill")
             }
         }
+        .environmentObject(userProfileModel)  // ← 2. TabView全体にUserProfileModelを提供
     }
 }
 
