@@ -10,6 +10,7 @@
 		A516F1D82AC27B0900D7E06D /* OtherUserShelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = A516F1D72AC27B0900D7E06D /* OtherUserShelf.swift */; };
 		A516F1DA2AC2A20F00D7E06D /* ReviewInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A516F1D92AC2A20F00D7E06D /* ReviewInputView.swift */; };
 		A517FB532AC05202000E9258 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A517FB522AC05202000E9258 /* SignIn.swift */; };
+		A543F79A2ACBBE9600272E96 /* ShelfModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A543F7992ACBBE9600272E96 /* ShelfModel.swift */; };
 		A54A42BE2AA7233700B3EDE0 /* SecretBaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A42BD2AA7233700B3EDE0 /* SecretBaseApp.swift */; };
 		A54A42C02AA7233700B3EDE0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A42BF2AA7233700B3EDE0 /* ContentView.swift */; };
 		A54A42C22AA7233800B3EDE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A54A42C12AA7233800B3EDE0 /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		A516F1D72AC27B0900D7E06D /* OtherUserShelf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserShelf.swift; sourceTree = "<group>"; };
 		A516F1D92AC2A20F00D7E06D /* ReviewInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewInputView.swift; sourceTree = "<group>"; };
 		A517FB522AC05202000E9258 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
+		A543F7992ACBBE9600272E96 /* ShelfModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfModel.swift; sourceTree = "<group>"; };
 		A54A42BA2AA7233700B3EDE0 /* SecretBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecretBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A54A42BD2AA7233700B3EDE0 /* SecretBaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretBaseApp.swift; sourceTree = "<group>"; };
 		A54A42BF2AA7233700B3EDE0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				A56367892AC1E50700B32E85 /* GetUsersWithItem.swift */,
 				A56367872AC19FE600B32E85 /* TitleSerchModel.swift */,
 				A578D5212ACAB7010070C2AF /* BookmarkModel.swift */,
+				A543F7992ACBBE9600272E96 /* ShelfModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				A54A42CD2AA7267400B3EDE0 /* Shelf.swift in Sources */,
 				A54A42C02AA7233700B3EDE0 /* ContentView.swift in Sources */,
 				A517FB532AC05202000E9258 /* SignIn.swift in Sources */,
+				A543F79A2ACBBE9600272E96 /* ShelfModel.swift in Sources */,
 				A56B63F92ABC773B004D24C6 /* TitleListModel.swift in Sources */,
 				A5C5204B2AB456B30066A002 /* TitleDetail.swift in Sources */,
 				A563678A2AC1E50700B32E85 /* GetUsersWithItem.swift in Sources */,
