@@ -24,10 +24,8 @@ struct ReviewInputView: View {
         }
     }
     
-    
     var body: some View {
         VStack(spacing: 20) {
-            
             TextEditor(text: $reviewText)
                 .padding()
                 .overlay(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
@@ -55,12 +53,11 @@ struct ReviewInputView: View {
                 Text(isEditing ? "レビューを追加・更新する" : "レビューを登録する")
                     .modifier(MainButtonModifier())
                     .padding()
-                    
             }
             .alert(item: $currentAlertType) { alertType in
                 switch alertType {
                 case .success:
-                    return Alert(title: Text("登録完了"), message: Text("レビューが正常に登録されました。"), dismissButton: .default(Text("OK")))
+                    return Alert(title: Text("登録完了"), message: Text("レビューが正常に登録されました。"), dismissButton: .default(Text("OK"), action: { self.dismissView() }))
                 case .error:
                     return Alert(title: Text("エラー"), message: Text("レビューの登録中に問題が発生しました。"), dismissButton: .default(Text("再試行")))
                 }
@@ -70,16 +67,12 @@ struct ReviewInputView: View {
     
     private func handleAlert(_ alertType: ReviewAlertType) {
         self.currentAlertType = alertType
-        if alertType == .success {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-        }
+    }
+    
+    func dismissView() {
+        self.presentationMode.wrappedValue.dismiss()
     }
 }
-
-
-
 
 struct ReviewInputView_Previews: PreviewProvider {
     static var previews: some View {
