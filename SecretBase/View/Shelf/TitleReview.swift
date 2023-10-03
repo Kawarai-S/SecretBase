@@ -47,7 +47,7 @@ struct TitleReview: View {
                                 
                                 Spacer()
                                 
-                                if item.likes?.isEmpty == false {
+                                if user.id == authManager.currentUser?.uid, item.likes?.isEmpty == false {
                                     NavigationLink(destination: LikedUsersListView(likedUsers: self.likedUsers), isActive: $showingLikedUsersList) {
                                         Image(systemName: "star.circle.fill")
                                             .resizable()
