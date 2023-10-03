@@ -54,7 +54,7 @@ struct SignInView: View {
                             .font(.title2)
                             .cornerRadius(30)
                     }
-                    .padding()
+                    .padding(.horizontal)
                     
                 }
                 .navigationDestination(isPresented: $isSignUp) {
