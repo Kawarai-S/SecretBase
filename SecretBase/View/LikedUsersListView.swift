@@ -12,13 +12,16 @@ struct LikedUsersListView: View {
     
     var body: some View {
         List(likedUsers, id: \.id) { user in
-            HStack {
-                UserIcon(path: user.icon)
-                    .frame(width: 50)
-                Text(user.name)
+            NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: UserProfileModel(), bookmarkedUsersModel: BookmarkedUsersModel())) {
+                HStack {
+                    UserIcon(path: user.icon)
+                        .frame(width: 42, height: 42)
+                    Text(user.name)
+                }
             }
         }
-        .navigationBarTitle("いいねを押したユーザー", displayMode: .inline)
+        .listStyle(.inset)
+        .navigationBarTitle("ふぁぼしたユーザー", displayMode: .inline)
     }
 }
 

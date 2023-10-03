@@ -171,13 +171,13 @@
 			children = (
 				A54A42BF2AA7233700B3EDE0 /* ContentView.swift */,
 				A578D51F2ACAB1DD0070C2AF /* BookmarkView.swift */,
+				A543F79B2ACC0D7500272E96 /* LikedUsersListView.swift */,
 				A516E2162AC5191400CA5B92 /* Shelf */,
 				A5675F182ABD8AAE00B30F45 /* Search */,
 				A55F289E2ABE9F8E003368DC /* SignIn */,
 				A55F289F2ABE9FA9003368DC /* Profile */,
 				A5675F172ABD8A5A00B30F45 /* Helpersgroup */,
 				A578D51D2ACA7E600070C2AF /* Modifiers.swif.swift */,
-				A543F79B2ACC0D7500272E96 /* LikedUsersListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

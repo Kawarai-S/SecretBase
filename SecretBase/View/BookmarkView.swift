@@ -36,7 +36,7 @@ struct BookmarkView: View {
                     NavigationLink(destination: OtherUserShelf(userId: user.id, userProfileModel: userProfileModel, bookmarkedUsersModel: bookmarkedModel)) {
                         HStack {
                             UserIcon(path: user.icon)
-                                .frame(width: 32, height: 32)
+                                .frame(width: 42, height: 42)
                             Text(user.name)
                         }
                     }
