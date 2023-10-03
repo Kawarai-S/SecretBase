@@ -54,6 +54,15 @@ struct TitleReview: View {
                                         .scaledToFit()
                                         .frame(width: 25)
                                         .foregroundColor(.gray)
+                                        .onTapGesture {
+                                            addLike(to: self.item, for: self.user) { success in
+                                                if success {
+                                                    print("Like added successfully!")
+                                                } else {
+                                                    print("Failed to add like!")
+                                                }
+                                            }
+                                        }
                                 }
                             }
                         }
