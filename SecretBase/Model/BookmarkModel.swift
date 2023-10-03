@@ -88,3 +88,83 @@ class BookmarkedUsersModel: ObservableObject {
         }
     }
 }
+
+class UserService:ObservableObject {
+    func addLike(to item: ShelfItem, for reviewOwner: AppUser, by userId: String, completion: @escaping (Bool) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+        
+        let firestore = Firestore.firestore()
+        // レビューの持ち主のドキュメントを指す参照を取得
+        let shelfCollectionRef = firestore.collection("Users").document(reviewOwner.id).collection("shelf")
+        
+        shelfCollectionRef.whereField("itemid", isEqualTo: item.itemId).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching documents: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            
+            guard let document = snapshot?.documents.first else {
+                print("Document with specified itemId not found.")
+                completion(false)
+                return
+            }
+            
+            let docRef = document.reference
+            // ログインしているユーザーのIDで「いいね」を追加
+            let newLikeMap = ["userId": userId]
+            docRef.updateData([
+                "likes": FieldValue.arrayUnion([newLikeMap])
+            ]) { err in
+                if let err = err {
+                    print("Error adding like: \(err)")
+                    completion(false)
+                } else {
+                    print("Like successfully added!")
+                    completion(true)
+                }
+            }
+        }
+    }
+    
+    func removeLike(from item: ShelfItem, for reviewOwner: AppUser, by userId: String, completion: @escaping (Bool) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+        
+        let firestore = Firestore.firestore()
+        let shelfCollectionRef = firestore.collection("Users").document(reviewOwner.id).collection("shelf")
+        
+        shelfCollectionRef.whereField("itemid", isEqualTo: item.itemId).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching documents: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            
+            guard let document = snapshot?.documents.first else {
+                print("Document with specified itemId not found.")
+                completion(false)
+                return
+            }
+            
+            let docRef = document.reference
+            let likeMapToRemove = ["userId": userId]
+            docRef.updateData([
+                "likes": FieldValue.arrayRemove([likeMapToRemove])
+            ]) { err in
+                if let err = err {
+                    print("Error removing like: \(err)")
+                    completion(false)
+                } else {
+                    print("Like successfully removed!")
+                    completion(true)
+                }
+            }
+        }
+    }
+}

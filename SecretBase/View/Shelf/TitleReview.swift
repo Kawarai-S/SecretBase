@@ -12,6 +12,11 @@ struct TitleReview: View {
     var item: ShelfItem
     @ObservedObject var userProfileModel: UserProfileModel
     @ObservedObject private var authManager = FirebaseAuthStateManager.shared
+    @ObservedObject var userService = UserService()
+    
+    //FAVOの状態管理
+    @State private var isLiked: Bool = false
+    
     //Favoしてくれた人
     @State private var likedUsers: [AppUser] = []
     
@@ -53,16 +58,31 @@ struct TitleReview: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 25)
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(isLiked ? .yellow : .gray)
                                         .onTapGesture {
-                                            addLike(to: self.item, for: self.user) { success in
-                                                if success {
-                                                    print("Like added successfully!")
+                                            if let currentUserId = FirebaseAuthStateManager.shared.currentUser?.uid {
+                                                if isLiked {
+                                                    userService.removeLike(from: self.item, for: self.user, by: currentUserId) { success in
+                                                        if success {
+                                                            print("Like removed successfully!")
+                                                            isLiked = false
+                                                        } else {
+                                                            print("Failed to remove like!")
+                                                        }
+                                                    }
                                                 } else {
-                                                    print("Failed to add like!")
+                                                    userService.addLike(to: self.item, for: self.user, by: currentUserId) { success in
+                                                        if success {
+                                                            print("Like added successfully!")
+                                                            isLiked = true
+                                                        } else {
+                                                            print("Failed to add like!")
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
+
                                 }
                             }
                         }
@@ -126,7 +146,12 @@ struct TitleReview: View {
             ReviewInputView(itemId: self.item.itemId, isEditing: true, originalReview: item.review) // itemIdを渡す
         }
         .onAppear {
-            userProfileModel.loadLikedUsers(for: item.likes ?? [])
+//            userProfileModel.loadLikedUsers(for: item.likes ?? [])
+            if let currentUserId = FirebaseAuthStateManager.shared.currentUser?.uid {
+                if item.likes?.contains(where: { $0.userId == currentUserId }) == true {
+                    isLiked = true
+                }
+            }
         }
     }
 }
