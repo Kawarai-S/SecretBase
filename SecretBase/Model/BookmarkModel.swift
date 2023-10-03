@@ -167,4 +167,49 @@ class UserService:ObservableObject {
             }
         }
     }
+    
+    func fetchLikedUsers(for item: ShelfItem, completion: @escaping ([AppUser]?) -> Void) {
+        guard let likes = item.likes else {
+            completion([])
+            return
+        }
+        
+        let firestore = Firestore.firestore()
+        let usersRef = firestore.collection("Users")
+        
+        let likedUserIds = likes.map { $0.userId }
+        
+        // likedUserIdsが空の場合は直ちに空の配列を返して終了
+        guard !likedUserIds.isEmpty else {
+            completion([])
+            return
+        }
+        
+        usersRef.whereField(FieldPath.documentID(), in: likedUserIds).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching liked users: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                print("Error fetching snapshot for liked users")
+                completion(nil)
+                return
+            }
+            
+            let likedUsers = snapshot.documents.compactMap { doc -> AppUser? in
+                let data = doc.data()
+                guard let name = data["name"] as? String,
+                      let icon = data["icon"] as? String,
+                      let profile = data["profile"] as? String else {
+                    return nil
+                }
+                let userFavorites = data["favorites"] as? [String] ?? []
+                return AppUser(id: doc.documentID, name: name, icon: icon, profile: profile, shelf: [], favorites: userFavorites)  // shelfは空で初期化
+            }
+            print("Fetched liked users: \(likedUsers)")
+            completion(likedUsers)
+        }
+    }
 }

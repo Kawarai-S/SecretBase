@@ -16,10 +16,12 @@ struct TitleReview: View {
     
     //FAVOの状態管理
     @State private var isLiked: Bool = false
+    //FAVOしてくれたリストへのリンクフラグ
+    @State private var showingLikedUsersList = false
     
     //Favoしてくれた人
     @State private var likedUsers: [AppUser] = []
-    
+
     //レビュー編集モーダル表示フラグ
     @State private var showReviewModal: Bool = false
     //レビュー削除用アラートフラグ
@@ -42,16 +44,31 @@ struct TitleReview: View {
                                 UserIcon(path: user.icon)
                                     .frame(width: 50)
                                 Text(user.name)
+                                
+                                Spacer()
+                                
+                                if item.likes?.isEmpty == false {
+                                    NavigationLink(destination: LikedUsersListView(likedUsers: self.likedUsers), isActive: $showingLikedUsersList) {
+                                        Image(systemName: "star.circle.fill")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 25)
+                                            .onTapGesture {
+                                                showingLikedUsersList = true
+                                            }
+                                    }
+                                }
+                                
                             }
                             Text(review)
                                 .lineSpacing(8)
                             
                             HStack {
                                 //なんで表示されないのー！後でまたやる
-                                ForEach(likedUsers, id: \.id) { likedUser in
-                                    UserIcon(path: user.icon)
-                                        .frame(width: 30, height: 30)
-                                }
+//                                ForEach(likedUsers, id: \.id) { likedUser in
+//                                    UserIcon(path: user.icon)
+//                                        .frame(width: 30, height: 30)
+//                                }
                                 Spacer()
                                 if user.id != authManager.currentUser?.uid {
                                     Image(systemName: "star.circle")
@@ -146,7 +163,12 @@ struct TitleReview: View {
             ReviewInputView(itemId: self.item.itemId, isEditing: true, originalReview: item.review) // itemIdを渡す
         }
         .onAppear {
-//            userProfileModel.loadLikedUsers(for: item.likes ?? [])
+            userService.fetchLikedUsers(for: item) { users in
+                if let users = users {
+                    self.likedUsers = users
+                    print("Updated likedUsers in View: \(self.likedUsers)")
+                }
+            }
             if let currentUserId = FirebaseAuthStateManager.shared.currentUser?.uid {
                 if item.likes?.contains(where: { $0.userId == currentUserId }) == true {
                     isLiked = true
