@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseFirestore
 
 class TitleSearchModel: ObservableObject {
     @Published var titles: [Title] = []

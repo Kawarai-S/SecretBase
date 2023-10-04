@@ -13,8 +13,8 @@ import SwiftUI
 class UserProfileModel: ObservableObject {
     @Published var user: AppUser? = nil
     @Published var titleListModel = TitleListModel()
-    //ファボした人を読み込むための配列
-    @Published var likedUsers: [AppUser] = []
+    //    //ファボした人を読み込むための配列
+    //    @Published var likedUsers: [AppUser] = []
     
     init() {
         titleListModel.fetchData()  // データを取得
@@ -57,6 +57,7 @@ class UserProfileModel: ObservableObject {
         }
     }
     
+    //棚の情報を取得
     private func fetchShelf(for userId: String, completion: @escaping ([ShelfItem]?) -> Void) {
         let firestore = Firestore.firestore()
         let shelfRef = firestore.collection("Users").document(userId).collection("shelf")
@@ -108,14 +109,41 @@ class UserProfileModel: ObservableObject {
         }
     }
     
-//    //ファボした人を読み込む
-//    func loadLikedUsers(for likes: [Like]) {
-//        fetchLikedUsers(for: likes) { users in
-//            print("Fetched liked users: \(users)")
-//            self.likedUsers = users
-//            print("Updated likedUsers: \(self.likedUsers)")
-//        }
-//    }
+    //ログインユーザーUIDと一致するドキュメントIDがあるか確認する
+    func checkUserInFirestore(showAdditionalInfoModal: Binding<Bool>) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            print("Failed to fetch current user's UID.")
+            return
+        }
+        
+        let firestore = Firestore.firestore()
+        let userDocRef = firestore.collection("Users").document(currentUserId)
+        
+        userDocRef.getDocument { userDocument, error in
+            if let error = error {
+                print("Error fetching user data: \(error.localizedDescription)")
+                return
+            }
+            
+            if let userDocument = userDocument, userDocument.exists {
+                // ドキュメントが存在する場合、何もしない
+                print("User document exists.")
+            } else {
+                // ドキュメントが存在しない場合、モーダルを表示
+                print("User document does not exist. Showing the modal...")
+                showAdditionalInfoModal.wrappedValue = true
+            }
+        }
+    }
+    
+    //    //ファボした人を読み込む
+    //    func loadLikedUsers(for likes: [Like]) {
+    //        fetchLikedUsers(for: likes) { users in
+    //            print("Fetched liked users: \(users)")
+    //            self.likedUsers = users
+    //            print("Updated likedUsers: \(self.likedUsers)")
+    //        }
+    //    }
 }
 
 //extension ShelfItem {

@@ -12,44 +12,35 @@ struct SignUp: View {
     @State private var password: String = ""
     @State private var showAlert = false
     @State private var errorMessage = ""
-    @State private var navigateToAdditionalInfo: Bool = false
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                TextField("Email", text: $email)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
-                    .background(Color.white)
-                    .cornerRadius(5.0)
-                
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
-                    .background(Color.white)
-                    .cornerRadius(5.0)
-                
-                Button("Sign Up") {
-                    FirebaseAuthStateManager.shared.signUp(withEmail: email, password: password) { success, error in
-                        if success {
-                            self.navigateToAdditionalInfo = true
-                        } else {
-                            self.errorMessage = error?.localizedDescription ?? "Unknown error"
-                            self.showAlert = true
-                        }
+        VStack(spacing: 20) {
+            TextField("Email", text: $email)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
+                .cornerRadius(5.0)
+            
+            SecureField("Password", text: $password)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 5.0).stroke(Color.gray, lineWidth: 1))
+                .background(Color.white)
+                .cornerRadius(5.0)
+            
+            Button("Sign Up") {
+                FirebaseAuthStateManager.shared.signUp(withEmail: email, password: password) { success, error in
+                    if !success {
+                        self.errorMessage = error?.localizedDescription ?? "Unknown error"
+                        self.showAlert = true
                     }
                 }
-                .modifier(MainButtonModifier())
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
-                }
-                .navigationDestination(isPresented: $navigateToAdditionalInfo) {
-                    AdditionalInfoView()
-                }
-                
             }
-            .padding()
+            .modifier(MainButtonModifier())
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+            }
         }
+        .padding()
     }
 }
 

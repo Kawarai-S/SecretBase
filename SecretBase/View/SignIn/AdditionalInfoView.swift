@@ -14,6 +14,8 @@ struct AdditionalInfoView: View {
     @State private var isImagePickerPresented: Bool = false
     @State private var selectedImage: UIImage?
     
+    @Binding var isUploaded: Bool
+    
     var body: some View {
         VStack(spacing: 20) {
             if let image = selectedImage {
@@ -55,9 +57,9 @@ struct AdditionalInfoView: View {
             Button("Complete Sign Up") {
                 uploadImage(selectedImage: selectedImage, name: name, profile: profile) { success in
                     if success {
-                        // 例: ContentViewに遷移するなど、成功した後の処理をここに書く
+                        isUploaded = true
                     } else {
-                        // 例: エラーアラートを表示するなど、失敗した場合の処理をここに書く
+                        // エラーハンドリング
                     }
                 }
             }
@@ -70,9 +72,9 @@ struct AdditionalInfoView: View {
     }
 }
 
-struct AdditionalInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        AdditionalInfoView()
-    }
-}
+//struct AdditionalInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AdditionalInfoView()
+//    }
+//}
 

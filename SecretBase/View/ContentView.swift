@@ -11,6 +11,13 @@ struct ContentView: View {
     @ObservedObject private var authStateManager = FirebaseAuthStateManager.shared
     @ObservedObject private var userProfileModel = UserProfileModel()
     
+    
+    @State private var showAdditionalInfoModal: Bool = false
+    @State private var showAlert = false
+    @State private var userInfoExists: Bool = false
+    @State private var isUserInfoUploaded = false
+
+    
     //Shelfの「作品を追加する」ボタン用
     @State private var selectedTab: Int = 0
 
@@ -64,7 +71,20 @@ struct ContentView: View {
                         Label("Bookmark", systemImage: "bookmark.fill")
                     }
                 }
-                .environmentObject(userProfileModel)  // ← 2. TabView全体にUserProfileModelを提供
+                .onAppear {
+                    userProfileModel.checkUserInFirestore(showAdditionalInfoModal: $showAdditionalInfoModal)
+                }
+                .sheet(isPresented: $showAdditionalInfoModal) {
+                    AdditionalInfoView(isUploaded: $isUserInfoUploaded)
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("情報が正常に保存されました"), dismissButton: .default(Text("OK")) {
+                        // OKを押した後の処理
+                        showAdditionalInfoModal = false
+                        userProfileModel.checkUserInFirestore(showAdditionalInfoModal: $showAdditionalInfoModal)
+                    })
+                }
+                .environmentObject(userProfileModel)
             } else {
                 SignInView()
             }
@@ -74,6 +94,14 @@ struct ContentView: View {
                 authStateManager.didSignInSuccessfully = false
             }
         }
+        .onChange(of: isUserInfoUploaded) { newValue in
+            if newValue {
+                showAlert = true
+                showAdditionalInfoModal = false
+                userProfileModel.fetchUserData()
+            }
+        }
+
     }
 }
 
